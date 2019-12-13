@@ -1,0 +1,36 @@
+(cfg_string (
+  (name project_name)
+  (prompt "Project name")
+))
+
+(cfg_string (
+  (name project_slug)
+  (prompt "Project slug")
+  (default "{{ project_name | slugify }}")
+))
+
+(cfg_list (
+  (name language)
+  (prompt "Which language do you use?")
+  (values (Reason OCaml))
+  (default Reason)
+))
+
+(cfg_list (
+  (name with_ci_cd)
+  (prompt "Which CI/CD service do you use?")
+  (values ("Github Actions" "Azure"))
+  (default "Github Actions")
+))
+
+(post_install (
+  (command esy)
+  (args (install))
+  (description "🎁  Installing packages.")
+))
+
+(post_install (
+  (command esy)
+  (args (build))
+  (description "🔧  Building project. This might take a couple minutes.")
+))
