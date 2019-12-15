@@ -23,7 +23,7 @@
 
 (starting_command (
   (command esy)
-  (args (start))
+  (args (x "{{ project_slug }}.exe"))
 ))
 
 (tutorial "https://github.com/tmattio/spin-templates/tree/master/cli/tutorials")

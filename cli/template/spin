@@ -10,27 +10,46 @@
 ))
 
 (cfg_list (
-  (name language)
-  (prompt "Which language do you use?")
+  (name syntax)
+  (prompt "Which syntax do you use?")
   (values (Reason OCaml))
   (default Reason)
 ))
 
 (cfg_list (
-  (name with_ci_cd)
+  (name ci_cd)
   (prompt "Which CI/CD service do you use?")
   (values ("Github Actions" "Azure"))
   (default "Github Actions")
 ))
 
+(ignore (
+  (files \.github)
+  (condition {{ ci_cd != "Github Actions" }})
+))
+
+(ignore (
+  (files \.ci azure-pipeline\.yml)
+  (condition {{ ci_cd != Azure }})
+))
+
+(ignore (
+  (files .*\.re)
+  (condition {{ syntax != Reason }})
+))
+
+(ignore (
+  (files .*\.ml)
+  (condition {{ syntax != OCaml }})
+))
+
 (post_install (
   (command esy)
   (args (install))
-  (description "🎁  Installing packages.")
+  (description "🎁  Installing packages. This might take a couple minutes.")
 ))
 
 (post_install (
   (command esy)
   (args (build))
-  (description "🔧  Building project. This might take a couple minutes.")
 ))
