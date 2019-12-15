@@ -1,4 +1,4 @@
-(name CLI)
+(name cli)
 (description "A cross-platform Command Line Interface")
 
 (command (
