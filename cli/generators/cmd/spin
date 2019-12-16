@@ -1,0 +1,17 @@
+(name cmd)
+(description "Generate a subcommand for the CLI.")
+
+(cfg_string (
+  (name name)
+  (prompt "Name of the subcommand")
+))
+
+(file (
+  (source "files/cmd.{% if syntax == 'OCaml' %}ml{% else %}re{% endif -%}")
+  (destination "executable/cmd/Cmd_{{ name | snake_case }}.{% if syntax == 'OCaml' %}ml{% else %}re{% endif -%}")
+))
+
+(file (
+  (source "files/test.{% if syntax == 'OCaml' %}ml{% else %}re{% endif -%}")
+  (destination "test/{{ project_slug | snake_case }}_exe/Test_cmd_{{ name }}.{% if syntax == 'OCaml' %}ml{% else %}re{% endif -%}")
+))

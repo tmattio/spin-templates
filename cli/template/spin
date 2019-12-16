@@ -24,23 +24,23 @@
 ))
 
 (ignore (
-  (files \.github)
-  (condition {{ ci_cd != "Github Actions" }})
+  (files (\.github))
+  (condition "{{ ci_cd != 'Github Actions' }}")
 ))
 
 (ignore (
-  (files \.ci azure-pipeline\.yml)
-  (condition {{ ci_cd != Azure }})
+  (files (\.ci azure-pipeline\.yml))
+  (condition "{{ ci_cd != 'Azure' }}")
 ))
 
 (ignore (
-  (files .*\.re)
-  (condition {{ syntax != Reason }})
+  (files (.*\.re))
+  (condition "{{ syntax != 'Reason' }}")
 ))
 
 (ignore (
-  (files .*\.ml)
-  (condition {{ syntax != OCaml }})
+  (files (.*\.ml))
+  (condition "{{ syntax != 'OCaml' }}")
 ))
 
 (post_install (
