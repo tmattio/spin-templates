@@ -1,9 +1,8 @@
 open Cmdliner;
 
-let commands = [Cmd__hello.cmd];
-
 let defaultCmd = {
-  let doc = "{{ project_desc }}";
+  let doc = "{{ project_description }}";
+
   (
     Term.(ret(const(_ => `Help((`Pager, None))) $ const())),
     Term.info(
@@ -11,7 +10,7 @@ let defaultCmd = {
       ~doc,
       ~envs=Man.envs,
       ~version=Man.version,
-      ~exits=Man.exists,
+      ~exits=Man.exits,
       ~man=Man.man,
       ~sdocs=Man.sdocs,
     ),
@@ -19,12 +18,12 @@ let defaultCmd = {
 };
 
 let argv =
-  Sys.argv
-  |> Array.map(arg =>
+  Sys.get_argv()
+  |> Array.map(~f=arg =>
        switch (arg) {
        | "-v" => "--version"
        | x => x
        }
      );
 
-let _ = Term.eval_choice(defaultCmd, commands, ~argv) |> Term.exit;
+let _ = Term.exit @@ Term.eval_choice(defaultCmd, Cmd.all, ~argv);

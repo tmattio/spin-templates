@@ -9,6 +9,12 @@
   (default "{{ project_name | slugify }}")
 ))
 
+(cfg_string (
+  (name project_description)
+  (prompt "Description")
+  (default "")
+))
+
 (cfg_list (
   (name syntax)
   (prompt "Which syntax do you use?")

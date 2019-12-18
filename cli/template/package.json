@@ -1,41 +1,73 @@
 {
   "name": "{{ project_slug }}",
   "version": "0.1.0",
-  "description": "OCaml and ReasonML project scaffolding.",
+  "description": "{{ project_description }}",
   "esy": {
-    "build": "dune build -p <PACKAGE_NAME>",
+    "build": "dune build --root . --only-packages {{ project_slug }}",
     "buildDev": "pesy",
-    "release": { "releasedBinaries": [ "{{ project_slug }}.exe" ] }
+    "buildsInSource": "_build",
+    "release": {
+      "bin": {
+        "{{ project_slug }}": "{{ project_slug }}.exe"
+      }
+    }
   },
   "buildDirs": {
     "test": {
-      "require": [ "{{ project_slug }}.lib", "rely.lib" ],
-      "main": "Test{{ project_slug | camel_case }}",
-      "name": "Test{{ project_slug | camel_case }}.exe"
+      "require": [
+        "{{ project_slug }}.lib",
+        "rely.lib"
+      ],
+      "flags": [
+        "-open Base",
+        "-linkall",
+        "-g"
+      ],
+      "includeSubdirs": "unqualified",
+      "main": "TestRunner",
+      "name": "test-runner.exe"
     },
     "library": {
-      "preprocess": [ "pps", "lwt_ppx", "ppx_let", "ppx_sexp_conv" ],
-      "require": [
-        "base", "console.lib", "pastel.lib", "lwt.unix", "str", "sexplib"
+      "preprocess": [
+        "pps",
+        "lwt_ppx",
+        "ppx_let"
       ],
+      "require": [
+        "base",
+        "console.lib",
+        "pastel.lib",
+        "lwt.unix",
+        "str"
+      ],
+      "flags": [
+        "-open Base"
+      ],
+      "includeSubdirs": "unqualified",
       "name": "{{ project_slug }}.lib",
       "namespace": "{{ project_slug | camel_case }}"
     },
     "executable": {
-      "preprocess": [ "pps", "lwt_ppx", "ppx_let" ],
+      "preprocess": [
+        "pps",
+        "lwt_ppx",
+        "ppx_let"
+      ],
       "require": [
-        "base", "cmdliner", "lwt.unix", "console.lib", "pastel.lib",
+        "base",
+        "cmdliner",
+        "lwt.unix",
+        "console.lib",
+        "pastel.lib",
         "{{ project_slug }}.lib"
       ],
-      "flags": [ "-ccopt", "-lgmp" ],
+      "flags": [
+        "-open Base"
+      ],
+      "includeSubdirs": "unqualified",
       "main": "{{ project_slug | camel_case }}App",
       "name": "{{ project_slug }}.exe"
     }
-  },
-  "scripts": {
-    "pesy": "bash -c 'env PESY_MODE=update pesy'",
-    "fmt": "bash -c 'esy refmt --in-place ./*/*.re'",
-    "test": "esy x Test{{ project_slug | camel_case }}.exe"
   },
   "dependencies": {
     "@esy-ocaml/reason": "3.5.2",
@@ -45,16 +77,24 @@
     "@opam/lwt": "4.4.0",
     "@opam/lwt_ppx": "1.2.4",
     "@opam/ppx_let": "v0.13.0",
-    "@opam/ppx_sexp_conv": "v0.13.0",
-    "@opam/sexplib": "v0.13.0",
     "@reason-native/console": "^0.1.0",
     "@reason-native/pastel": "^0.2.2",
+    "@reason-native/rely": "^3.1.0",
     "ocaml": "4.8.1000"
   },
   "devDependencies": {
-    "@opam/merlin": "3.3.2",
-    "@reason-native/rely": "^3.1.0",
-    "refmterr": "3.2.2",
-    "pesy": "0.4.4"
+    "@opam/merlin": "*",
+    "@opam/odoc": "*",
+    "@opam/utop": "*",
+    "refmterr": "*",
+    "pesy": "*"
+  },
+  "scripts": {
+    "pesy": "bash -c 'env PESY_MODE=update pesy'",
+    "fmt": "esy dune build @fmt --auto-promote",
+    "test": "esy x test-runner.exe",
+    "watch": "esy dune build --root . --only-packages {{ project_slug }} --watch",
+    "doc": "esy dune build @doc",
+    "utop": "esy dune utop library -- -implicit-bindings"
   }
 }

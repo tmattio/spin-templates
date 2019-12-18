@@ -1,3 +1,0 @@
-include SmokeTest;
-
-TestFramework.cli();

@@ -16,38 +16,38 @@ module EnvVar =
          },
        ) => {
   include M;
-  let optValue = Sys.getenv_opt(name) |> Option.map(parse);
+  let optValue = Sys.getenv(name) |> Option.map(~f=parse);
   let getOpt = () => optValue;
   let get = () => getOpt() |> Option.value(~default);
   let docInfo = {name, doc, default: unparse(default)};
 };
 
-let ensureTrailingBackslash = str =>
-  switch (str.[String.length(str) - 1]) {
-  | '/' => str
-  | _ => str ++ "/"
+let getenvExn = name => {
+  let fn = () => {
+    switch (Sys.getenv(name)) {
+    | Some(env) => env
+    | _ => raise(Errors.MissingEnvVar(name))
+    };
   };
-
-let getOptionorThrow = (message, opt) =>
-  switch (opt) {
-  | None => failwith(message)
-  | Some(x) => x
-  };
+  Errors.handleErrors(fn);
+};
 
 module {{ project_slug| modulify }}_CACHE_DIR =
   EnvVar({
     type t = string;
-    let parse = ensureTrailingBackslash;
-    let unparse = ensureTrailingBackslash;
+    let parse = Utils.Filename.ensure_trailing;
+    let unparse = Utils.Filename.ensure_trailing;
     let name = "{{ project_slug| modulify }}_CACHE_DIR";
     let doc = "The directory where the templates and other cached data is stored.";
     let default = {
       let home =
-        Sys.getenv_opt("HOME")
-        |> getOptionorThrow("There isn't a $HOME environment variable set.");
-      let cacheDir = Filename.concat(home, ".cache");
-      Filename.concat(cacheDir, "{{ project_slug }}");
+        switch (Caml.Sys.os_type) {
+        | "Unix" => getenvExn("HOME")
+        | _ => getenvExn("APPDATA")
+        };
+      let cacheDir = Caml.Filename.concat(home, ".cache");
+      Caml.Filename.concat(cacheDir, "{{ project_slug }}");
     };
   });
 
-let getDocs = () => [{{ project_slug| modulify }}_CACHE_DIR.docInfo];
+let all = () => [{{ project_slug| modulify }}_CACHE_DIR.docInfo];
