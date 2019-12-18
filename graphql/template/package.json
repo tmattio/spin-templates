@@ -130,6 +130,6 @@
     "test": "esy x test-runner.exe",
     "format": "dune build @fmt --auto-promote --root .",
     "doc": "esy dune build @doc",
-    "watch": "esy dune build --root . --only-packages spin --watch"
+    "watch": "esy dune build --root . --only-packages {{ project_slug }} --watch"
   }
 }

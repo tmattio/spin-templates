@@ -1,4 +1,4 @@
 (lang dune 1.11)
-(name spin)
+(name {{ project_slug }})
 
 (using fmt 1.2 (enabled_for reason))

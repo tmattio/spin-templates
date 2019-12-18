@@ -9,6 +9,12 @@
   (default "{{ project_name | slugify }}")
 ))
 
+(cfg_string (
+  (name project_description)
+  (prompt "Description")
+  (default "")
+))
+
 (post_install (
   (command esy)
   (args (install))

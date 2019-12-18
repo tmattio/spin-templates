@@ -9,11 +9,11 @@ module type Environment = {let values: values;};
 
 module Make = (E: EnvironmentProvider) : Environment => {
   let test = {
-    db_connection: "postgresql://postgres:postgres@localhost:5432/community_test",
+    db_connection: "postgresql://postgres:postgres@localhost:5432/{{ project_slug | snake_case }}_test",
   };
 
   let development = {
-    db_connection: "postgresql://postgres:postgres@localhost:5432/community_dev",
+    db_connection: "postgresql://postgres:postgres@localhost:5432/{{ project_slug | snake_case }}_dev",
   };
 
   let create_environment = connection => {db_connection: connection};
