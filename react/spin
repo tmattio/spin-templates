@@ -1,0 +1,24 @@
+(name react)
+(description "A React application in Reason.")
+
+(command (
+  (name "yarn start")
+  (description "Starts the development server.")
+))
+
+(command (
+  (name "yarn build")
+  (description "Bundles the app into static files for production.")
+))
+
+(command (
+  (name "yarn test")
+  (description "Starts the test runner.")
+))
+
+(starting_command (
+  (command yarn)
+  (args (start))
+))
+
+(tutorial "https://github.com/tmattio/spin-templates/tree/master/react/tutorials")

@@ -1,0 +1,34 @@
+(cfg_string (
+  (name project_name)
+  (prompt "Project name")
+))
+
+(cfg_string (
+  (name project_slug)
+  (prompt "Project slug")
+  (default "{{ project_name | slugify }}")
+))
+
+(cfg_string (
+  (name project_description)
+  (prompt "Description")
+  (default "")
+))
+
+(cfg_list (
+  (name css_framework)
+  (prompt "Which CSS framework do you use?")
+  (values ("TailwindCSS" "None"))
+  (default "None")
+))
+
+(ignore (
+  (files (config/postcss\.config\.js config/tailwind\.config\.js))
+  (condition "{{ css_framework != 'TailwindCSS' }}")
+))
+
+(post_install (
+  (command yarn)
+  (args (install))
+  (description "🎁  Installing packages. This might take a couple minutes.")
+))
