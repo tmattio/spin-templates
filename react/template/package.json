@@ -47,7 +47,7 @@
       "<rootDir>/tests"
     ],
     "testMatch": [
-      "<rootDir>/tests/**/*.test.{js,bs.js}"
+      "<rootDir>/tests/**/*_test.{js,bs.js}"
     ]
   }
 }
