@@ -1,0 +1,26 @@
+(cfg_string (
+  (name project_name)
+  (prompt "Project name")
+))
+
+(cfg_string (
+  (name project_slug)
+  (prompt "Project slug")
+  (default "{{ project_name | slugify }}")
+))
+
+(post_install (
+  (command esy)
+  (args (install))
+  (description "🎁  Installing packages. This might take a couple minutes.")
+))
+
+(post_install (
+  (command esy)
+  (args (pesy))
+))
+
+(post_install (
+  (command esy)
+  (args (build))
+))

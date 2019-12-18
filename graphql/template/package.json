@@ -1,0 +1,135 @@
+{
+  "name": "{{ project_slug }}",
+  "version": "0.2.0",
+  "description": "Starter Reason Morph Esy Pesy Project",
+  "esy": {
+    "build": "dune build --root . --only-packages #{self.name}",
+    "buildDev": "pesy",
+    "buildsInSource": "_build",
+    "release": {
+      "bin": {
+        "server": "server.exe"
+      }
+    }
+  },
+  "buildDirs": {
+    "library/{{ project_slug | snake_case }}": {
+      "preprocess": [
+        "pps",
+        "lwt_ppx",
+        "ppx_let"
+      ],
+      "require": [
+        "base",
+        "logs",
+        "lwt"
+      ],
+      "flags": [
+        "-open Base"
+      ],
+      "includeSubdirs": "unqualified",
+      "name": "{{ project_slug }}.lib",
+      "namespace": "{{ project_slug | camel_case }}"
+    },
+    "library/{{ project_slug | snake_case }}_web": {
+      "preprocess": [
+        "pps",
+        "lwt_ppx",
+        "ppx_let"
+      ],
+      "require": [
+        "{{ project_slug }}.lib",
+        "base",
+        "opium_core",
+        "morph",
+        "morph_graphql_server",
+        "graphql-lwt",
+        "mtime",
+        "mtime.clock.os",
+        "logs",
+        "lwt"
+      ],
+      "flags": [
+        "-open Base"
+      ],
+      "includeSubdirs": "unqualified",
+      "name": "{{ project_slug }}.web",
+      "namespace": "{{ project_slug | camel_case }}Web"
+    },
+    "test": {
+      "require": [
+        "{{ project_slug }}.lib",
+        "{{ project_slug }}.web",
+        "base",
+        "rely.lib"
+      ],
+      "flags": [
+        "-open Base"
+      ],
+      "includeSubdirs": "unqualified",
+      "main": "TestRunner",
+      "name": "test-runner.exe"
+    },
+    "executable": {
+      "preprocess": [
+        "pps",
+        "lwt_ppx",
+        "ppx_let"
+      ],
+      "require": [
+        "{{ project_slug }}.lib",
+        "{{ project_slug }}.web",
+        "base",
+        "morph",
+        "morph_server_http",
+        "logs",
+        "logs.fmt",
+        "fmt.tty",
+        "lwt",
+        "uri"
+      ],
+      "flags": [
+        "-open Base"
+      ],
+      "includeSubdirs": "unqualified",
+      "main": "Server",
+      "name": "server.exe"
+    }
+  },
+  "dependencies": {
+    "@esy-ocaml/reason": "*",
+    "@opam/base": "v0.13.0",
+    "@opam/lwt": "4.4.0",
+    "@opam/lwt_ppx": "1.2.4",
+    "@opam/mtime": "*",
+    "@opam/ppx_let": "v0.13.0",
+    "@opam/tls": "0.10.5",
+    "@opam/uri": "*",
+    "@reason-native-web/morph": "*",
+    "@reason-native-web/morph_graphql_server": "*",
+    "@reason-native-web/morph_server": "*",
+    "@reason-native-web/morph_server_http": "*",
+    "@reason-native/rely": "*",
+    "ocaml": "~4.8.1000"
+  },
+  "devDependencies": {
+    "@opam/dune": "*",
+    "@opam/merlin": "*",
+    "@opam/odoc": "*",
+    "pesy": "*",
+    "refmterr": "*"
+  },
+  "resolutions": {
+    "@opam/httpaf-lwt-unix": "anmonteiro/httpaf:httpaf-lwt-unix.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
+    "@opam/httpaf-lwt": "anmonteiro/httpaf:httpaf-lwt.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
+    "@opam/httpaf": "anmonteiro/httpaf:httpaf.opam#76b461bed081c64908fb1fdfa076ab2c936ca622",
+    "@opam/opium_core": "rgrinberg/opium:opium_core.opam#287b83f85bcf6c75d503b1edab77c7ec524f9090"
+  },
+  "scripts": {
+    "start": "esy x server.exe",
+    "test": "esy x test-runner.exe",
+    "format": "dune build @fmt --auto-promote --root .",
+    "doc": "esy dune build @doc",
+    "watch": "esy dune build --root . --only-packages spin --watch"
+  }
+}

@@ -1,0 +1,14 @@
+
+; !!!! This dune file is generated from the package.json file by pesy. If you modify it by hand
+; !!!! your changes will be undone! Instead, edit the package.json and then rerun 'esy pesy' at the project root.
+; !!!! If you want to stop using pesy and manage this file by hand, change package.json's 'esy.build' command to: refmterr dune build -p  {{ project_slug }}
+(library
+   ; The namespace that other packages/libraries will access this library through
+   (name {{ project_slug | camel_case }})
+   ; Other libraries list this name in their package.json 'require' field to use this library.
+   (public_name {{ project_slug }}.lib)
+   (libraries  base logs lwt )
+   (flags ( -open Base ))  ; From package.json flags field
+   (preprocess ( pps lwt_ppx ppx_let ))  ; From package.json preprocess field
+)
+(include_subdirs unqualified)  ; From package.json includeSubdirs field
