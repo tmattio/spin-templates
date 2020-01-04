@@ -1,4 +1,4 @@
-(name minimal)
+(name native)
 (description "A native project containing the minimum viable configurations")
 
 (command (
@@ -17,11 +17,11 @@
 ))
 
 (command (
-  (name "esy x {{ project_slug }}.exe")
-  (description "Run the command line binary.")
+  (name "esy start")
+  (description "Run the executable.")
 ))
 
 (starting_command (
   (command esy)
-  (args (x "{{ project_slug }}.exe"))
+  (args (start))
 ))
