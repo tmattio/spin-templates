@@ -37,5 +37,5 @@ jobs:
           printf 'Test Template\n\n\n${{ matrix.css-framework }}\n' | spin new ../react .
 
       - name: Run tests
-        run: esy test
+        run: npm run test
         working-directory: ./_generated
