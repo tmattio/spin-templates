@@ -6,11 +6,11 @@ on:
       - master
     paths:
       - .github/workflows/native.yml
-      - native/**
+      - native/template/**
   pull_request:
     paths:
       - .github/workflows/native.yml
-      - native/**
+      - native/template/**
 
 jobs:
   build:

@@ -1,5 +1,7 @@
 # CLI
 
+![Actions Status](https://github.com/tmattio/spin-templates/workflows/cli/badge.svg)
+
 A Spin template to create CLIs.
 
 ## To Do

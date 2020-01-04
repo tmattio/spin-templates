@@ -6,11 +6,11 @@ on:
       - master
     paths:
       - .github/workflows/react.yml
-      - react/**
+      - react/template/**
   pull_request:
     paths:
       - .github/workflows/react.yml
-      - react/**
+      - react/template/**
 
 jobs:
   build:

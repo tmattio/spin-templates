@@ -6,11 +6,11 @@ on:
       - master
     paths:
       - .github/workflows/cli.yml
-      - cli/**
+      - cli/template/**
   pull_request:
     paths:
       - .github/workflows/cli.yml
-      - cli/**
+      - cli/template/**
 
 jobs:
   build:

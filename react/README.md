@@ -1,5 +1,7 @@
 # React
 
+![Actions Status](https://github.com/tmattio/spin-templates/workflows/react/badge.svg)
+
 A Spin template to create Reason React applications.
 
 ## To Do
