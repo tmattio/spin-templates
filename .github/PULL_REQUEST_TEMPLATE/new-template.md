@@ -8,7 +8,7 @@ about: Use this template to add a new official spin template.
 **Checks**
 
 - [ ] Offer a Reason and OCaml version
-- [ ] Provide a CI/CD for at least Github Actions and Azure
+- [ ] Provide a CI/CD with Github Actions
 - [ ] Contains real unit tests and integration tests
 - [ ] Include documentation generation from markdown and code
 - [ ] Deploy release artifact (e.g. Docker images, binaries, static web files, etc.)

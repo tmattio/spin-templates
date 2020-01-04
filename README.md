@@ -2,14 +2,13 @@
 
 Official templates for Spin.
 
-For native applications:
-
-- **cli** - Native command line interfaces.
-- **lib** - Simple Reason/OCaml library.
-
-For web applications:
-
-- **react** - React Single-Page-Application in Reason.
+| Template | Type   | Description                                                    | Build                                                                                     |
+|----------|--------|----------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| `native`   | Native | A native project containing the minimum viable configurations. | [![Actions Status](https://github.com/tmattio/spin-templates/workflows/native/badge.svg)] |
+| `cli`      | Native | Native command line interface.                                 | [![Actions Status](https://github.com/tmattio/spin-templates/workflows/cli/badge.svg)]    |
+| `lib`      | Hybrid | A library to be used in native or web applications.            | [![Actions Status](https://github.com/tmattio/spin-templates/workflows/lib/badge.svg)]    |
+| `ppx`      | Hybrid | A PPX library to be used in native or web applications.        | [![Actions Status](https://github.com/tmattio/spin-templates/workflows/ppx/badge.svg)]    |
+| `react`    | Web    | React Single-Page-Application in Reason.                       | [![Actions Status](https://github.com/tmattio/spin-templates/workflows/react/badge.svg)]  |
 
 ## Guidelines
 
@@ -17,7 +16,7 @@ The official templates are high-quality templates that are ready for the real wo
 Here are some guidelines that we follow when creating a template:
 
 - Offer a Reason and OCaml version
-- Provide a CI/CD for at least Github Actions and Azure
+- Provide a CI/CD with Github Actions
 - Create real unit tests and integration tests
 - Include documentation generation from markdown and code
 - Deploy release artifact (e.g. Docker images, binaries, static web files, etc.)
