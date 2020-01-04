@@ -1,0 +1,40 @@
+name: native
+
+on:
+  push:
+    branches:
+      - master
+      - next
+    paths:
+      - native/**
+  pull_request:
+    paths:
+      - native/**
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        syntax: [1, 2]
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Install npm dependencies
+        run: npm install -g esy@latest @tmattio/spin
+
+      - name: Generate template
+        run: |
+          mkdir _generated
+          cd _generated
+          printf 'Test Template\n\n\n${{ matrix.syntax }}\n' | spin new ../native .
+
+      - name: Run tests
+        run: esy test
+        working-directory: ./_generated

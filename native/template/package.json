@@ -1,0 +1,112 @@
+{
+  "name": "{{ project_slug }}",
+  "version": "0.1.0",
+  "description": "{{ project_description }}",
+  "author": "Thibaut Mattio <thibaut.mattio@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tmattio/{{ project_slug }}/issues"
+  },
+  "homepage": "https://github.com/tmattio/{{ project_slug }}",
+  "esy": {
+    "build": "dune build -p #{self.name}",
+    {% if syntax == 'Reason' -%}
+    "buildDev": "refmterr dune build -p #{self.name}",
+    {% endif -%}
+    "NOTE": "Optional release Section. Customizes result of `esy release`",
+    "release": {
+      "bin": {
+        "{{ project_slug }}": "{{ project_slug }}.exe"
+      }
+    },
+    "buildEnv": {
+      "ODOC_SYNTAX": "{% if syntax == 'Reason' %}re{% else %}ml{% endif %}"
+    }
+  },
+  "buildDirs": {
+    "test": {
+      "require": [
+        "base",
+        "{{ project_slug }}/lib",
+        "rely/lib"
+      ],
+      "flags": [
+        "-open",
+        "Base",
+        "-linkall",
+        "-g",
+        "-w",
+        "-9"
+      ],
+      "includeSubdirs": "unqualified",
+      "namespace": "{{ project_slug | modulify }}_test"
+    },
+    "test_runner": {
+      "require": [
+        "{{ project_slug }}/test"
+      ],
+      "bin": {
+        "test-runner.exe": "test_runner_app.{% if syntax == 'Reason' %}re{% else %}ml{% endif %}"
+      }
+    },
+    "lib": {
+      "require": [
+        "base",
+        "console/lib",
+        "pastel/lib"
+      ],
+      "flags": [
+        "-open",
+        "Base"
+      ],
+      "includeSubdirs": "unqualified",
+      "namespace": "{{ project_slug | modulify }}"
+    },
+    "bin": {
+      "require": [
+        "base",
+        "{{ project_slug }}/lib"
+      ],
+      "flags": [
+        "-open",
+        "Base"
+      ],
+      "bin": {
+        "{{ project_slug }}.exe": "{{ project_slug | snake_case }}_app.{% if syntax == 'Reason' %}re{% else %}ml{% endif %}"
+      },
+      "includeSubdirs": "unqualified"
+    }
+  },
+  "dependencies": {
+    {% if syntax == 'Reason' -%}
+    "@esy-ocaml/reason": "*",
+    {% endif -%}
+    "@opam/base": "v0.13.0",
+    "@reason-native/console": "*",
+    "@reason-native/pastel": "*",
+    "@reason-native/rely": "*",
+    "ocaml": "~4.8.1000"
+  },
+  "devDependencies": {
+    "@opam/dune": "*",
+    "@opam/merlin": "*",
+    "@opam/odoc": "*",
+    "@opam/utop": "*",
+    "@pesy/esy-pesy": "esy/pesy#5c6e1c3",
+    {% if syntax == 'Reason' -%}
+    "ocaml": "~4.8.1000",
+    "refmterr": "*"
+    {%- else -%}
+    "ocaml": "~4.8.1000"
+    {%- endif %}
+  },
+  "scripts": {
+    "start": "esy x {{ project_slug }}.exe",
+    "test": "esy x test-runner.exe",
+    "doc": "esy dune build @doc",
+    "format": "esy dune build @fmt --auto-promote",
+    "watch": "esy dune build -p #{self.name} --watch",
+    "doc-path": "esy echo #{self.target_dir}/default/_doc/_html/index.html",
+    "utop": "esy dune utop lib -- -implicit-bindings"
+  }
+}

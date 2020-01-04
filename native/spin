@@ -1,0 +1,27 @@
+(name minimal)
+(description "A native project containing the minimum viable configurations")
+
+(command (
+  (name "esy install")
+  (description "Download and lock the dependencies.")
+))
+
+(command (
+  (name "esy build")
+  (description "Ensure all dependencies are built and compile the project.")
+))
+
+(command (
+  (name "esy test")
+  (description "Starts the test runner.")
+))
+
+(command (
+  (name "esy x {{ project_slug }}.exe")
+  (description "Run the command line binary.")
+))
+
+(starting_command (
+  (command esy)
+  (args (x "{{ project_slug }}.exe"))
+))
