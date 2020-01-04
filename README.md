@@ -4,11 +4,11 @@ Official templates for Spin.
 
 | Template | Type   | Description                                                    | Build                                                                                     |
 |----------|--------|----------------------------------------------------------------|-------------------------------------------------------------------------------------------|
-| `native`   | Native | A native project containing the minimum viable configurations. | [![Actions Status](https://github.com/tmattio/spin-templates/workflows/native/badge.svg)] |
-| `cli`      | Native | Native command line interface.                                 | [![Actions Status](https://github.com/tmattio/spin-templates/workflows/cli/badge.svg)]    |
-| `lib`      | Hybrid | A library to be used in native or web applications.            | [![Actions Status](https://github.com/tmattio/spin-templates/workflows/lib/badge.svg)]    |
-| `ppx`      | Hybrid | A PPX library to be used in native or web applications.        | [![Actions Status](https://github.com/tmattio/spin-templates/workflows/ppx/badge.svg)]    |
-| `react`    | Web    | React Single-Page-Application in Reason.                       | [![Actions Status](https://github.com/tmattio/spin-templates/workflows/react/badge.svg)]  |
+| `native`   | Native | A native project containing the minimum viable configurations. | ![Actions Status](https://github.com/tmattio/spin-templates/workflows/native/badge.svg) |
+| `cli`      | Native | Native command line interface.                                 | ![Actions Status](https://github.com/tmattio/spin-templates/workflows/cli/badge.svg)    |
+| `lib`      | Hybrid | A library to be used in native or web applications.            | ![Actions Status](https://github.com/tmattio/spin-templates/workflows/lib/badge.svg)    |
+| `ppx`      | Hybrid | A PPX library to be used in native or web applications.        | ![Actions Status](https://github.com/tmattio/spin-templates/workflows/ppx/badge.svg)    |
+| `react`    | Web    | React Single-Page-Application in Reason.                       | ![Actions Status](https://github.com/tmattio/spin-templates/workflows/react/badge.svg)  |
 
 ## Guidelines
 
