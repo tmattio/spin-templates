@@ -22,30 +22,13 @@
   (default Reason)
 ))
 
-(cfg_list (
-  (name ci_cd)
-  (prompt "Which CI/CD service do you use?")
-  (values ("Github Actions" "Azure"))
-  (default "Github Actions")
-))
-
 (ignore (
-  (files (\.github))
-  (condition "{{ ci_cd != 'Github Actions' }}")
-))
-
-(ignore (
-  (files (\.ci azure-pipeline\.yml))
-  (condition "{{ ci_cd != 'Azure' }}")
-))
-
-(ignore (
-  (files (.*\.re))
+  (files (.*\.re .*\.rei))
   (condition "{{ syntax != 'Reason' }}")
 ))
 
 (ignore (
-  (files (.*\.ml))
+  (files (.*\.ml .*\.mli \.ocamlformat))
   (condition "{{ syntax != 'OCaml' }}")
 ))
 

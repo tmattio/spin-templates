@@ -1,16 +1,16 @@
-name: native
+name: react
 
 on:
   push:
     branches:
       - master
     paths:
-      - .github/workflows/native.yml
-      - native/**
+      - .github/workflows/react.yml
+      - react/**
   pull_request:
     paths:
-      - .github/workflows/native.yml
-      - native/**
+      - .github/workflows/react.yml
+      - react/**
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        syntax: [1, 2]
+        css-framework: [1, 2]
     steps:
       - uses: actions/checkout@v1
 
@@ -34,7 +34,7 @@ jobs:
         run: |
           mkdir _generated
           cd _generated
-          printf 'Test Template\n\n\n${{ matrix.syntax }}\n' | spin new ../native .
+          printf 'Test Template\n\n\n${{ matrix.css-framework }}\n' | spin new ../react .
 
       - name: Run tests
         run: esy test
