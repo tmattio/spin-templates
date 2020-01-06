@@ -27,6 +27,13 @@ jobs:
         with:
           node-version: 12
 
+      - name: Cache node dependencies
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node
+
       - name: Install npm dependencies
         run: npm install -g esy@latest @tmattio/spin
 
