@@ -27,8 +27,8 @@
     "test": {
       "require": [
         "base",
-        "{{ project_slug }}/lib",
-        "rely/lib"
+        "{{ project_slug }}.lib",
+        "rely.lib"
       ],
       "flags": [
         "-open",
@@ -39,11 +39,12 @@
         "-9"
       ],
       "includeSubdirs": "unqualified",
+      "name": "{{ project_slug }}.test",
       "namespace": "{{ project_slug | modulify }}_test"
     },
     "test_runner": {
       "require": [
-        "{{ project_slug }}/test"
+        "{{ project_slug }}.test"
       ],
       "bin": {
         "test-runner.exe": "test_runner_app.{% if syntax == 'Reason' %}re{% else %}ml{% endif %}"
@@ -51,21 +52,21 @@
     },
     "lib": {
       "require": [
-        "base",
-        "console/lib",
-        "pastel/lib"
+        "base"
       ],
       "flags": [
         "-open",
         "Base"
       ],
       "includeSubdirs": "unqualified",
+      "name": "{{ project_slug }}.lib",
       "namespace": "{{ project_slug | modulify }}"
     },
     "bin": {
       "require": [
         "base",
-        "{{ project_slug }}/lib"
+        "stdio",
+        "{{ project_slug }}.lib"
       ],
       "flags": [
         "-open",
@@ -82,8 +83,6 @@
     "@esy-ocaml/reason": "*",
     {% endif -%}
     "@opam/base": "v0.13.0",
-    "@reason-native/console": "*",
-    "@reason-native/pastel": "*",
     "@reason-native/rely": "*",
     "ocaml": "~4.8.1000"
   },
