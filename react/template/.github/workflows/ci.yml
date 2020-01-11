@@ -27,17 +27,17 @@ jobs:
             ${{ runner.os }}-yarn-
     
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Check formatting
         run: |
-          yarn fmt
+          yarn format
           if [ -n "$(git status --porcelain)" ]; then
             echo "There are differences:"
             git status --porcelain
             echo "----"
             echo ""
-            echo 'Please run `esy format` locally to fix the issues.'
+            echo 'Please run `yarn format` locally to fix the issues.'
             exit 1
           fi
 
@@ -67,7 +67,7 @@ jobs:
             ${{ runner.os }}-yarn-
     
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Build production assets
         run: yarn build
