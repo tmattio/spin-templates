@@ -14,7 +14,7 @@ module Styles = {
   let link =
     style([
       fontSize(rem(1.875)),
-      textDecoration(none),
+      textDecoration(`none),
       color(hex("4299e1")),
     ]);
 };
