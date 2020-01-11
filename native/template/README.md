@@ -1,5 +1,7 @@
 # {{ project_name }}
 
+[![Actions Status](https://github.com/tmattio/{{ project_slug }}/workflows/CI/CD%20Pipeline/badge.svg)](https://github.com/tmattio/{{ project_slug }}/actions)
+
 {{ project_description }}
 
 ## Contributing
