@@ -74,8 +74,6 @@ The following snippet describes {{ project_name }}'s repository structure.
 ├── LICENSE
 │
 ├── package.json
-|   NPM package definition.
-|   To know more about creating Esy packages, see https://esy.sh/docs/en/configuration.html.
 │
 └── README.md
 ```
