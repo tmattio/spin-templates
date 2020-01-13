@@ -4,6 +4,10 @@
 
 A Spin template to create Reason React applications.
 
+```bash
+spin new react
+```
+
 ## Acknowledgments
 
 This template is inspired by these awesome projects:

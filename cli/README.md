@@ -4,6 +4,10 @@
 
 A Spin template to create CLIs.
 
+```bash
+spin new cli
+```
+
 ## Acknowledgments
 
 This template is inspired by these awesome projects:
