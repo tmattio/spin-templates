@@ -1,0 +1,56 @@
+{
+  "name": "{{ project_slug }}",
+  "version": "0.1.0",
+  "description": "{{ project_description }}",
+  "author": "Thibaut Mattio",
+  "license": "MIT",
+  "homepage": "https://github.com/tmattio/{{ project_slug }}",
+  "bugs": {
+    "url": "https://github.com/tmattio/{{ project_slug }}/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tmattio/{{ project_slug }}.git"
+  },
+  "esy": {
+    "build": "dune build -p #{self.name}",
+    {% if syntax == 'Reason' -%}
+    "buildDev": "refmterr dune build -p #{self.name}",
+    {% endif -%}
+    "buildEnv": {
+      "ODOC_SYNTAX": "{% if syntax == 'Reason' %}re{% else %}ml{% endif %}"
+    }
+  },
+  "peerDependencies": {
+    "ocaml": ">= 4.6.0"
+  },
+  "dependencies": {
+    {% if syntax == 'Reason' -%}
+    "@esy-ocaml/reason": "*",
+    {% endif -%}
+    "@opam/base": "v0.13.0",
+    "@opam/dune": "*",
+    "@opam/ppxlib": "*",
+    "@reason-native/rely": "*"
+  },
+  "devDependencies": {
+    "@opam/merlin": "*",
+    "@opam/odoc": "*",
+    "@opam/utop": "*",
+    "@pesy/esy-pesy": "0.1.0-alpha.5",
+    {% if syntax == 'Reason' -%}
+    "ocaml": "~4.8.1000",
+    "refmterr": "*"
+    {%- else -%}
+    "ocaml": "~4.8.1000"
+    {%- endif %}
+  },
+  "scripts": {
+    "test": "esy x test-runner.exe",
+    "doc": "esy dune build @doc",
+    "doc-path": "esy echo #{self.target_dir}/default/_doc/_html/index.html",
+    "format": "esy dune build @fmt --auto-promote",
+    "watch": "esy dune build -p #{self.name} --watch",
+    "utop": "esy dune utop lib -- -implicit-bindings"
+  }
+}

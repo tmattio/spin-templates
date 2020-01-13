@@ -1,0 +1,50 @@
+(cfg_string (
+  (name project_name)
+  (prompt "Project name")
+))
+
+(cfg_string (
+  (name project_slug)
+  (prompt "Project slug")
+  (default "{{ project_name | slugify }}")
+))
+
+(cfg_string (
+  (name project_description)
+  (prompt "Description")
+  (default "")
+))
+
+(cfg_list (
+  (name syntax)
+  (prompt "Which syntax do you use?")
+  (values (Reason OCaml))
+  (default Reason)
+))
+
+(ignore (
+  (files (.*\.re .*\.rei))
+  (condition "{{ syntax != 'Reason' }}")
+))
+
+(ignore (
+  (files (.*\.ml .*\.mli \.ocamlformat))
+  (condition "{{ syntax != 'OCaml' }}")
+))
+
+(post_install (
+  (command esy)
+  (args (install))
+  (description "🎁  Installing packages. This might take a couple minutes.")
+))
+
+(post_install (
+  (command esy)
+  (args (dune build))
+))
+
+(post_install (
+  (command esy)
+  (working_dir test_bs)
+  (args ())
+))
