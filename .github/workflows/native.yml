@@ -46,3 +46,7 @@ jobs:
       - name: Run tests
         run: esy test
         working-directory: ./_generated
+
+      - name: Run binary
+        run: esy start
+        working-directory: ./_generated
