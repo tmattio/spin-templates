@@ -17,6 +17,7 @@ _opam/
 # Esy generated files
 _esy/
 _release/
+_export/
 npm-debug.log
 yarn-error.log
 node_modules/

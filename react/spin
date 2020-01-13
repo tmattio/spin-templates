@@ -20,5 +20,3 @@
   (command yarn)
   (args (start))
 ))
-
-(tutorial "https://github.com/tmattio/spin-templates/tree/master/react/tutorials")
