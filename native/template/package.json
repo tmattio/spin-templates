@@ -83,6 +83,7 @@
     "@esy-ocaml/reason": "*",
     {% endif -%}
     "@opam/base": "v0.13.0",
+    "@opam/stdio": "v0.13.0",
     "@reason-native/rely": "*",
     "ocaml": "~4.8.1000"
   },
@@ -91,7 +92,7 @@
     "@opam/merlin": "*",
     "@opam/odoc": "*",
     "@opam/utop": "*",
-    "@pesy/esy-pesy": "esy/pesy#5c6e1c3",
+    "@pesy/esy-pesy": "0.1.0-alpha.5",
     {% if syntax == 'Reason' -%}
     "ocaml": "~4.8.1000",
     "refmterr": "*"
@@ -103,9 +104,9 @@
     "start": "esy x {{ project_slug }}.exe",
     "test": "esy x test-runner.exe",
     "doc": "esy dune build @doc",
+    "doc-path": "esy echo #{self.target_dir}/default/_doc/_html/index.html",
     "format": "esy dune build @fmt --auto-promote",
     "watch": "esy dune build -p #{self.name} --watch",
-    "doc-path": "esy echo #{self.target_dir}/default/_doc/_html/index.html",
     "utop": "esy dune utop lib -- -implicit-bindings"
   }
 }
