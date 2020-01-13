@@ -1,8 +1,8 @@
-exception MissingEnvVar(string);
+exception Missing_env_var(string);
 
-let handleErrors = fn =>
+let handle_errors = fn =>
   try(fn()) {
-  | MissingEnvVar(name) =>
+  | Missing_env_var(name) =>
     Console.error(
       <Pastel color=Pastel.Red>
         {"😱  Ooops, it seems you don't have an environment variable named \""
@@ -11,7 +11,6 @@ let handleErrors = fn =>
       </Pastel>,
     );
     Caml.exit(201);
-  
   | _ as exn =>
     Console.log(
       <Pastel color=Pastel.Red>
@@ -30,5 +29,4 @@ type error = {
 
 let all = () => [
   {doc: "on missing required environment variable.", exit_code: 201},
-  {doc: "on other exceptions.", exit_code: 299},
 ];

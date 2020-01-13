@@ -1,7 +1,13 @@
 {% raw -%}
-name: Continuous Integration
+name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -10,12 +16,15 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
+        node-version: [12.x]
     steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-
       - uses: actions/checkout@v1
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
       - name: Cache esy dependencies
         uses: actions/cache@v1
         id: cache
@@ -28,7 +37,7 @@ jobs:
             ${{ runner.OS }}-
 
       - name: Install esy
-        run: npm install -g esy@latest
+        run: npm install -g @esy-nightly/esy@latest
 
       - name: Import dependencies
         if: steps.cache.outputs.cache-hit == 'true'
@@ -45,7 +54,7 @@ jobs:
 
       - name: Run tests
         run: esy test
-        
+
       - name: Export dependencies
         run: esy export-dependencies
 {% endraw %}

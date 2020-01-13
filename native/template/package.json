@@ -4,10 +4,14 @@
   "description": "{{ project_description }}",
   "author": "Thibaut Mattio <thibaut.mattio@gmail.com>",
   "license": "MIT",
+  "homepage": "https://github.com/tmattio/{{ project_slug }}",
   "bugs": {
     "url": "https://github.com/tmattio/{{ project_slug }}/issues"
   },
-  "homepage": "https://github.com/tmattio/{{ project_slug }}",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tmattio/{{ project_slug }}.git"
+  },
   "esy": {
     "build": "dune build -p #{self.name}",
     {% if syntax == 'Reason' -%}
