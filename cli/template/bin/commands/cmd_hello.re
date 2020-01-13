@@ -1,5 +1,5 @@
 open Cmdliner;
-open {{ project_slug | camel_case }};
+open {{ project_slug | modulify }};
 
 let run = (~nameToGreet) => {
   let greeting = Utils.greet(nameToGreet);
@@ -12,7 +12,9 @@ let cmd = {
 
   let nameToGreet = {
     let doc = "The person to greet.";
-    Arg.(required & pos(0, some(string), None) & info([], ~docv="NAME", ~doc));
+    Arg.(
+      required & pos(0, some(string), None) & info([], ~docv="NAME", ~doc)
+    );
   };
 
   let runCommand = nameToGreet => Lwt_main.run(run(~nameToGreet));

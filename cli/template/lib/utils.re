@@ -6,4 +6,4 @@ module Filename = {
     };
 };
 
-let greet = (name) => "Hello " ++ name ++ "!";
+let greet = name => "Hello " ++ name ++ "!";

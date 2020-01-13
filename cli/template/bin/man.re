@@ -14,10 +14,10 @@ let man = [
 let version = Package.version;
 
 let envs =
-  {{ project_slug | camel_case }}.Config.all
-  |> {{ project_slug | camel_case }}.Errors.handleErrors
+  {{ project_slug | modulify }}.Config.all
+  |> {{ project_slug | modulify }}.Errors.handle_errors
   |> List.map(~f=el =>
-       {{ project_slug | camel_case }}.Config.(
+       {{ project_slug | modulify }}.Config.(
          Term.env_info(
            ~doc=Printf.sprintf("%s\ndefaults to \"%s\"", el.doc, el.default),
            el.name,
@@ -29,9 +29,9 @@ let sdocs = Manpage.s_common_options;
 
 let exits =
   List.concat([
-    {{ project_slug | camel_case }}.Errors.all()
+    {{ project_slug | modulify }}.Errors.all()
     |> List.map(~f=el =>
-         {{ project_slug | camel_case }}.Errors.(Term.exit_info(el.exit_code, ~doc=el.doc))
+         {{ project_slug | modulify }}.Errors.(Term.exit_info(el.exit_code, ~doc=el.doc))
        ),
     Term.default_exits,
   ]);

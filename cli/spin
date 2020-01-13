@@ -17,13 +17,11 @@
 ))
 
 (command (
-  (name "esy x {{ project_slug }}.exe")
+  (name "esy start")
   (description "Run the command line binary.")
 ))
 
 (starting_command (
   (command esy)
-  (args (x "{{ project_slug }}.exe"))
+  (args (start))
 ))
-
-(tutorial "https://github.com/tmattio/spin-templates/tree/master/cli/tutorials")
