@@ -47,6 +47,6 @@ jobs:
         run: esy test
         working-directory: ./_generated
 
-      - name: Run tests
+      - name: Run binary
         run: esy start hello World
         working-directory: ./_generated

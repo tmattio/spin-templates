@@ -87,12 +87,12 @@
     "@esy-ocaml/reason": "*",
     {% endif -%}
     "@opam/base": "v0.13.0",
-    "@opam/stdio": "v0.13.0",
+    "@opam/dune": "*",
+    "@opam/stdio": "*",
     "@reason-native/rely": "*",
-    "ocaml": "~4.8.1000"
+    "ocaml": ">= 4.6.0"
   },
   "devDependencies": {
-    "@opam/dune": "*",
     "@opam/merlin": "*",
     "@opam/odoc": "*",
     "@opam/utop": "*",
