@@ -8,7 +8,6 @@ class Tmattio{{ project_slug | camel_case }} < Formula
   bottle :unneeded
 
   test do
-    system "#{bin}/{{ project_slug }}", '--version'
   end
 
   def install

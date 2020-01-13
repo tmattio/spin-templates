@@ -32,12 +32,12 @@ let getenv_exn = name => {
   Errors.handle_errors(fn);
 };
 
-module {{ project_slug | snake_case | uppercase }}_CACHE_DIR =
+module {{ project_slug | snake_case | upper }}_CACHE_DIR =
   EnvVar({
     type t = string;
     let parse = Utils.Filename.ensure_trailing;
     let unparse = Utils.Filename.ensure_trailing;
-    let name = "{{ project_slug | snake_case | uppercase }}_CACHE_DIR";
+    let name = "{{ project_slug | snake_case | upper }}_CACHE_DIR";
     let doc = "The directory where the cached data is stored.";
     let default = {
       let home =
@@ -50,4 +50,4 @@ module {{ project_slug | snake_case | uppercase }}_CACHE_DIR =
     };
   });
 
-let all = () => [{{ project_slug | snake_case | uppercase }}_CACHE_DIR.doc_info];
+let all = () => [{{ project_slug | snake_case | upper }}_CACHE_DIR.doc_info];

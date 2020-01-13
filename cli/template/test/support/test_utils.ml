@@ -11,7 +11,7 @@ let get_tempdir name =
     (Unix.time () |> Float.to_int |> Int.to_string)
   |> Caml.Filename.concat (Caml.Filename.get_temp_dir_name ())
 
-(** Run {{ project name }} binary with the given arguments and return the
+(** Run {{ project_name }} binary with the given arguments and return the
     standard output. *)
 let run args =
   let arguments = args |> Array.append [| "esy"; "start" |] in
@@ -20,7 +20,7 @@ let run args =
     |> Array.append
          [| Printf.sprintf
               "%s=%s"
-              {{ project_slug | modulify }}.Config.{{ project_slug | snake_case | uppercase }}_CACHE_DIR.name
+              {{ project_slug | modulify }}.Config.{{ project_slug | snake_case | upper }}_CACHE_DIR.name
               (get_tempdir "cache_dir")
          |]
   in

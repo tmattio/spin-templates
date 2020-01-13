@@ -39,14 +39,14 @@ let getenv_exn name =
   in
   Errors.handle_errors fn
 
-module {{ project_slug | snake_case | uppercase }}_CACHE_DIR = EnvVar (struct
+module {{ project_slug | snake_case | upper }}_CACHE_DIR = EnvVar (struct
   type t = string
 
   let parse = Utils.Filename.ensure_trailing
 
   let unparse = Utils.Filename.ensure_trailing
 
-  let name = "{{ project_slug | snake_case | uppercase }}_CACHE_DIR"
+  let name = "{{ project_slug | snake_case | upper }}_CACHE_DIR"
 
   let doc = "The directory where the cached data is stored."
 
@@ -62,4 +62,4 @@ module {{ project_slug | snake_case | uppercase }}_CACHE_DIR = EnvVar (struct
     Caml.Filename.concat cache_dir "{{ project_slug }}"
 end)
 
-let all () = [ {{ project_slug | snake_case | uppercase }}_CACHE_DIR.doc_info ]
+let all () = [ {{ project_slug | snake_case | upper }}_CACHE_DIR.doc_info ]
