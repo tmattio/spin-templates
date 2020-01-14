@@ -1,6 +1,6 @@
 # {{ project_name }}
 
-[![Actions Status](https://github.com/tmattio/{{ project_slug }}/workflows/CI/badge.svg)](https://github.com/tmattio/{{ project_slug }}/actions)
+[![Actions Status](https://github.com/{{ github_username }}/{{ project_slug }}/workflows/CI/badge.svg)](https://github.com/{{ github_username }}/{{ project_slug }}/actions)
 
 {{ project_description }}
 
@@ -19,15 +19,15 @@ brew install https://raw.githubusercontent.com/tmattio/{{ project_slug }}/master
 ### Using npm
 
 ```bash
-yarn global add @tmattio/{{ project_slug }}
+yarn global add @{{ npm_username }}/{{ project_slug }}
 # Or
-npm -g install @tmattio/{{ project_slug }}
+npm -g install @{{ npm_username }}/{{ project_slug }}
 ```
 
 ### Using a script
 
 ```bash
-curl -fsSL https://github.com/tmattio/{{ project_slug }}/raw/master/scripts/install.sh | bash
+curl -fsSL https://github.com/{{ github_username }}/{{ project_slug }}/raw/master/scripts/install.sh | bash
 ```
 
 ## Usage

@@ -41,7 +41,7 @@ jobs:
         run: |
           mkdir _generated
           cd _generated
-          printf 'Test Template\n\n\n${{ matrix.syntax }}\n' | spin new ../ppx .
+          printf 'Test Template\n\n\nName\nusername\nusername\n${{ matrix.syntax }}\n' | spin new ../ppx .
 
       - name: Run tests
         run: esy test

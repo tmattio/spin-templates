@@ -35,16 +35,16 @@ set_filename() {
     FILENAME="{{ project_slug }}-darwin-x64"
   else
     echo "OS $OS is not supported."
-    echo "If you think that's a bug - please file an issue to https://github.com/tmattio/{{ project_slug }}/issues"
+    echo "If you think that's a bug - please file an issue to https://github.com/{{ github_username }}/{{ project_slug }}/issues"
     exit 1
   fi
 }
 
 download() {
   if [ "$RELEASE" == "latest" ]; then
-    URL=https://github.com/tmattio/{{ project_slug }}/releases/latest/download/$FILENAME.zip
+    URL=https://github.com/{{ github_username }}/{{ project_slug }}/releases/latest/download/$FILENAME.zip
   else
-    URL=https://github.com/tmattio/{{ project_slug }}/releases/download/v$RELEASE/$FILENAME.zip
+    URL=https://github.com/{{ github_username }}/{{ project_slug }}/releases/download/v$RELEASE/$FILENAME.zip
   fi
 
   DOWNLOAD_DIR=$(mktemp -d)

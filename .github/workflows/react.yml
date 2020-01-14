@@ -41,7 +41,7 @@ jobs:
         run: |
           mkdir _generated
           cd _generated
-          printf 'Test Template\n\n\n${{ matrix.css-framework }}\n' | spin new ../react .
+          printf 'Test Template\n\n\nName\n${{ matrix.css-framework }}\n' | spin new ../react .
 
       - name: Run tests
         run: npm run test

@@ -1,8 +1,8 @@
-open TestFramework;
+open Test_framework;
 
-describe("Test Integration `{{ project_slug | snake_case }} {{ name | snake_case }}`", ({test, _}) => {
+describe("Test Integration `{{ project_slug }} {{ cmd_name | slugify }}`", ({test, _}) => {
   test("Validate standard output", ({expect}) => {
-    let output = run([|"{{ name | snake_case }}"|]);
+    let output = Test_utils.run([|"{{ cmd_name | slugify }}"|]);
     expect.string(output |> String.strip).toMatch("Hello World!");
   })
 });

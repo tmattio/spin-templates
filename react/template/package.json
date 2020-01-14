@@ -2,22 +2,21 @@
   "name": "{{ project_slug }}",
   "version": "0.1.0",
   "description": "{{ project_description }}",
+  "author": "{{ author_name }}{% if author_email %} <{{ author_email }}>{% endif %}",
+  "license": "MIT",
+  "homepage": "https://github.com/{{ github_username }}/{{ project_slug }}",
+  "bugs": {
+    "url": "https://github.com/{{ github_username }}/{{ project_slug }}/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/{{ github_username }}/{{ project_slug }}.git"
+  },
   "keywords": [
     "BuckleScript",
     "Reason",
     "ReasonReact"
   ],
-  "scripts": {
-    "build": "bsb -make-world && NODE_ENV=production webpack --config config/webpack.config.js && cp -n public/* build/ | true",
-    "start": "concurrently -c --kill-others 'yarn start:bsb' 'yarn start:webpack'",
-    "start:bsb": "bsb -make-world -w",
-    "start:webpack": "webpack-dev-server --config config/webpack.config.js --open",
-    "clean": "bsb -clean-world",
-    "test": "bsb -make-world && jest",
-    "format": "bsrefmt --in-place */**/*.re */*.re"
-  },
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "autoprefixer": "^9.7.3",
     "react": "^16.12.0",
@@ -52,5 +51,14 @@
     "testMatch": [
       "<rootDir>/tests/**/*_test.{js,bs.js}"
     ]
+  },
+  "scripts": {
+    "build": "bsb -make-world && NODE_ENV=production webpack --config config/webpack.config.js && cp -n public/* build/ | true",
+    "start": "concurrently -c --kill-others 'yarn start:bsb' 'yarn start:webpack'",
+    "start:bsb": "bsb -make-world -w",
+    "start:webpack": "webpack-dev-server --config config/webpack.config.js --open",
+    "clean": "bsb -clean-world",
+    "test": "bsb -make-world && jest",
+    "format": "bsrefmt --in-place */**/*.re */*.re"
   }
 }

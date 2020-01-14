@@ -1,5 +1,5 @@
 open Cmdliner;
-open {{ project_slug | camel_case }};
+open {{ project_slug | modulify }};
 
 let run = () => {
   Console.log("Hello World!");
@@ -9,12 +9,12 @@ let run = () => {
 let cmd = {
   let doc = "Prints a hello world message to the standard output.";
 
-  let runCommand = run |> Errors.handleErrors |> Lwt_main.run;
+  let run_command = () => run |> Errors.handle_errors |> Lwt_main.run;
 
   (
-    Term.(const(runCommand)),
+    Term.(app(const(run_command), const())),
     Term.info(
-      "{{ name | snake_case }}",
+      "{{ cmd_name | slugify }}",
       ~doc,
       ~envs=Man.envs,
       ~version=Man.version,

@@ -52,7 +52,7 @@ for (const file of filesToTouch) {
 }
 
 const pkgJson = {
-  name: "@tmattio/{{ project_slug }}",
+  name: "@{{ npm_username }}/{{ project_slug }}",
   version: package.version,
   description: package.description,
   homepage: package.homepage,
