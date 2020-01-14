@@ -15,8 +15,3 @@
   (name "yarn test")
   (description "Starts the test runner.")
 ))
-
-(starting_command (
-  (command yarn)
-  (args (start))
-))

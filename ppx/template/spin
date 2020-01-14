@@ -40,10 +40,11 @@
 
 (post_install (
   (command esy)
-  (args (pesy))
+  (args (dune build))
 ))
 
 (post_install (
   (command esy)
-  (args (dune build))
+  (working_dir test_bs)
+  (args ())
 ))

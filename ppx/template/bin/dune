@@ -1,0 +1,8 @@
+(executable
+ (name {{ project_slug | snake_case }}_app)
+ (modules (:standard))
+ (public_name {{ project_slug }}.exe)
+ (libraries base {{ project_slug }}.lib)
+ (flags -open Base))
+
+(include_subdirs unqualified)

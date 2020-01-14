@@ -1,5 +1,5 @@
-(name cli)
-(description "A cross-platform Command Line Interface")
+(name ppx)
+(description "PPX library with prebuilt binaries for native and web")
 
 (command (
   (name "esy install")
@@ -14,9 +14,4 @@
 (command (
   (name "esy test")
   (description "Starts the test runner.")
-))
-
-(command (
-  (name "esy start")
-  (description "Run the command line binary.")
 ))

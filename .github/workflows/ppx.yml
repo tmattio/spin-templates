@@ -1,16 +1,16 @@
-name: cli
+name: ppx
 
 on:
   push:
     branches:
       - master
     paths:
-      - .github/workflows/cli.yml
-      - cli/template/**
+      - .github/workflows/ppx.yml
+      - ppx/template/**
   pull_request:
     paths:
-      - .github/workflows/cli.yml
-      - cli/template/**
+      - .github/workflows/ppx.yml
+      - ppx/template/**
 
 jobs:
   build:
@@ -41,12 +41,16 @@ jobs:
         run: |
           mkdir _generated
           cd _generated
-          printf 'Test Template\n\n\n${{ matrix.syntax }}\n' | spin new ../cli .
+          printf 'Test Template\n\n\n${{ matrix.syntax }}\n' | spin new ../ppx .
 
       - name: Run tests
         run: esy test
         working-directory: ./_generated
 
-      - name: Run binary
-        run: esy start hello World
-        working-directory: ./_generated
+      - name: Run Bucklescript tests
+        run: |
+          esy install
+          esy build
+          yarn install
+          yarn build
+        working-directory: ./_generated/test_bs

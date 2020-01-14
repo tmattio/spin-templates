@@ -1,8 +1,28 @@
 (lang dune 1.11)
 (name {{ project_slug }})
+(version 0.1.0)
+(source (github tmattio/{{ project_slug }}))
+(license MIT)
+(authors "Thibaut Mattio <thibaut.mattio@gmail.com>")
+(maintainers "Thibaut Mattio <thibaut.mattio@gmail.com>")
 
 {% if syntax == 'Reason' -%}
 (using fmt 1.2 (enabled_for reason))
 {%- else -%}
 (using fmt 1.2 (enabled_for ocaml))
 {%- endif %}
+
+(package
+ (name {{ project_slug }})
+ (synopsis "{{ project_description }}")
+ (depends
+  {% if syntax == 'Reason' -%}
+  reason
+  {% endif -%}
+  dune
+  rely
+  base
+  cmdliner
+  lwt
+  console
+  pastel))

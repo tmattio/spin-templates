@@ -1,0 +1,10 @@
+(library
+ (name {{ project_slug | modulify }}_test)
+ (public_name {{ project_slug }}.test)
+ (modules (:standard))
+ (preprocess
+  (pps {{ project_slug }}.lib))
+ (libraries rely.lib {{ project_slug }}.lib)
+ (flags -open Base -linkall -g -w -9))
+
+(include_subdirs unqualified)

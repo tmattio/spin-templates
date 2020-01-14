@@ -20,8 +20,3 @@
   (name "esy start")
   (description "Run the executable.")
 ))
-
-(starting_command (
-  (command esy)
-  (args (start))
-))
