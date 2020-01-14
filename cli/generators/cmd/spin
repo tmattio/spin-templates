@@ -2,16 +2,18 @@
 (description "Generate a subcommand for the CLI.")
 
 (cfg_string (
-  (name name)
+  (name cmd_name)
   (prompt "Name of the subcommand")
 ))
 
 (file (
   (source "files/cmd.{% if syntax == 'OCaml' %}ml{% else %}re{% endif -%}")
-  (destination "executable/commands/cmd_{{ name | snake_case }}.{% if syntax == 'OCaml' %}ml{% else %}re{% endif -%}")
+  (destination "bin/commands/cmd_{{ cmd_name | snake_case }}.{% if syntax == 'OCaml' %}ml{% else %}re{% endif -%}")
 ))
 
 (file (
   (source "files/test.{% if syntax == 'OCaml' %}ml{% else %}re{% endif -%}")
-  (destination "test/{{ project_slug | snake_case }}_exe/Test_cmd_{{ name }}.{% if syntax == 'OCaml' %}ml{% else %}re{% endif -%}")
+  (destination "test/{{ project_slug | snake_case }}_app/cmd_{{ cmd_name }}_test.{% if syntax == 'OCaml' %}ml{% else %}re{% endif -%}")
 ))
+
+(message "You need to add `Cmd_{{ cmd_name | snake_case }}.cmd` to your list of commands in bin/commands.{% if syntax == 'OCaml' %}ml{% else %}re{% endif -%}")

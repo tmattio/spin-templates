@@ -1,6 +1,6 @@
 # {{ project_name }}
 
-[![Actions Status](https://github.com/tmattio/{{ project_slug }}/workflows/CI/badge.svg)](https://github.com/tmattio/{{ project_slug }}/actions)
+[![Actions Status](https://github.com/{{ github_username }}/{{ project_slug }}/workflows/CI/badge.svg)](https://github.com/{{ github_username }}/{{ project_slug }}/actions)
 
 {{ project_description }}
 

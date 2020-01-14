@@ -1,6 +1,6 @@
 # {{ project_name }}
 
-[![Actions Status](https://github.com/tmattio/{{ project_slug }}/workflows/CI/badge.svg)](https://github.com/tmattio/{{ project_slug }}/actions)
+[![Actions Status](https://github.com/{{ github_username }}/{{ project_slug }}/workflows/CI/badge.svg)](https://github.com/{{ github_username }}/{{ project_slug }}/actions)
 
 {{ project_description }}
 
@@ -13,7 +13,7 @@
 ### With `opam` on native projects
 
 ```bash
-opam pin add {{ project_slug }} https://github.com/tmattio/{{ project_slug }}.git#master
+opam pin add {{ project_slug }} https://github.com/{{ github_username }}/{{ project_slug }}.git#master
 ```
 
 ### With `esy` on native projects
@@ -55,9 +55,9 @@ And add the PPX in your `bsconfig.json` file:
 However, is using `esy` bothers you, we also provide a NPM package with prebuilt binaries.
 
 ```bash
-yarn global add @tmattio/{{ project_slug }}
+yarn global add @{{ npm_username }}/{{ project_slug }}
 # Or
-npm -g install @tmattio/{{ project_slug }}
+npm -g install @{{ npm_username }}/{{ project_slug }}
 ```
 
 And add the PPX in your `bsconfig.json` file:
@@ -65,7 +65,7 @@ And add the PPX in your `bsconfig.json` file:
 ```json
 {
   "ppx-flags": [
-    "ppx-flags": ["@tmattio/{{ project_slug }}"]
+    "ppx-flags": ["@{{ npm_username }}/{{ project_slug }}"]
   ]
 }
 ```

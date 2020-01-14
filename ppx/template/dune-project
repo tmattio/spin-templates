@@ -1,10 +1,10 @@
 (lang dune 1.11)
 (name {{ project_slug }})
 (version 0.1.0)
-(source (github tmattio/{{ project_slug }}))
+(source (github {{ github_username }}/{{ project_slug }}))
 (license MIT)
-(authors "Thibaut Mattio <thibaut.mattio@gmail.com>")
-(maintainers "Thibaut Mattio <thibaut.mattio@gmail.com>")
+(authors "{{ author_name }}")
+(maintainers "{{ author_name }}")
 
 (using fmt 1.2)
 (generate_opam_files true)

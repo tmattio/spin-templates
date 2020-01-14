@@ -14,7 +14,7 @@ let handle_errors = fn =>
   | _ as exn =>
     Console.log(
       <Pastel color=Pastel.Red>
-        {"😱  Ooops, an unknown error occured. You can file a bug reports at https://github.com/tmattio/{{ project_slug }}.\n"
+        {"😱  Ooops, an unknown error occured. You can file a bug reports at https://github.com/{{ github_username }}/{{ project_slug }}.\n"
          ++ "Here is the stack trace in case it helps:\n"}
       </Pastel>,
     );

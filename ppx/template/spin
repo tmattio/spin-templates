@@ -15,11 +15,25 @@
   (default "")
 ))
 
+(cfg_string (
+  (name author_name)
+  (prompt "Name of the author")
+))
+
+(cfg_string (
+  (name github_username)
+  (prompt "Github username")
+))
+
+(cfg_string (
+  (name npm_username)
+  (prompt "NPM username")
+))
+
 (cfg_list (
   (name syntax)
   (prompt "Which syntax do you use?")
   (values (Reason OCaml))
-  (default Reason)
 ))
 
 (ignore (
