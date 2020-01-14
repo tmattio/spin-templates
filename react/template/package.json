@@ -60,5 +60,5 @@
     "clean": "bsb -clean-world",
     "test": "bsb -make-world && jest",
     "format": "bsrefmt --in-place */**/*.re */*.re"
-  },
+  }
 }
