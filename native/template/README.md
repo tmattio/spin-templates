@@ -41,11 +41,7 @@ again with the same simple `esy` command.
 esy
 ```
 
-This project uses [Dune](https://dune.build/) as a build system, and Pesy to generate Dune's configuration files. If you change the `buildDirs` configuration in `package.json`, you will have to regenerate the configuration files using:
-
-```bash
-esy pesy
-```
+This project uses [Dune](https://dune.build/) as a build system.
 
 ### Running Binary
 

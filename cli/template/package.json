@@ -98,7 +98,6 @@
     "@opam/merlin": "*",
     "@opam/odoc": "*",
     "@opam/utop": "*",
-    "@pesy/esy-pesy": "0.1.0-alpha.5",
     {% if syntax == 'Reason' -%}
     "ocaml": "~4.8.1000",
     "refmterr": "*"

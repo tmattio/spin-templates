@@ -49,10 +49,5 @@
 
 (post_install (
   (command esy)
-  (args (pesy))
-))
-
-(post_install (
-  (command esy)
   (args (dune build))
 ))
