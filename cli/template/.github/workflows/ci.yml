@@ -18,7 +18,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         node-version: [12.x]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -47,7 +47,7 @@ jobs:
         run: esy install
 
       - name: Build
-        run: esy build
+        run: esy build --release
 
       - name: Check formatting
         run: esy dune build @fmt

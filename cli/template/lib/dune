@@ -1,0 +1,8 @@
+(library
+ (name {{ project_slug | modulify }})
+ (public_name {{ project_slug }}.lib)
+ (modules (:standard))
+ (libraries base stdio)
+ (flags -open Base))
+
+(include_subdirs unqualified)

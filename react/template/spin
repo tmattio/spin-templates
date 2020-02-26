@@ -27,13 +27,40 @@
   (default "None")
 ))
 
+(cfg_list (
+  (name ci_cd)
+  (prompt "Which CI/CD platform do you use")
+  (values (Github None))
+  (default Github)
+))
+
 (ignore (
   (files (config/postcss\.config\.js config/tailwind\.config\.js))
   (condition "{{ css_framework != 'TailwindCSS' }}")
+))
+
+(ignore (
+  (files (\.github/.*))
+  (condition "{{ ci_cd != 'Github' }}")
 ))
 
 (post_install (
   (command yarn)
   (args (install))
   (description "🎁  Installing packages. This might take a couple minutes.")
+))
+
+(example_command (
+  (name "yarn start")
+  (description "Starts the development server.")
+))
+
+(example_command (
+  (name "yarn build")
+  (description "Bundles the app into static files for production.")
+))
+
+(example_command (
+  (name "yarn test")
+  (description "Starts the test runner.")
 ))

@@ -18,7 +18,7 @@ jobs:
       - name: Log Github reference
         run: echo "Checking out ${{ github.ref }}"
 
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
@@ -48,7 +48,7 @@ jobs:
         run: esy install
 
       - name: Build
-        run: esy build
+        run: esy build --release
 
       - name: Run tests
         run: esy test
@@ -61,10 +61,10 @@ jobs:
         shell: bash
         run: |
           # from https://stackoverflow.com/a/24848739/617787
-          s=$(pwd); d=$(dirname $(esy x which {% endraw %}{{ project_slug }}{% raw %}.exe));
+          s=$(pwd); d=$(dirname $(esy x which {% endraw %}{{ project_slug }}{% raw %}));
           while [ "${d#$s/}" == "${d}" ]
           do s=$(dirname $s);b="../${b}"; done; 
-          ESY__BINARY_PATH=${b}${d#$s/}/{% endraw %}{{ project_slug }}{% raw %}.exe
+          ESY__BINARY_PATH=${b}${d#$s/}/{% endraw %}{{ project_slug }}{% raw %}
           echo "ESY__BINARY_PATH: $ESY__BINARY_PATH"
           echo "##[set-output name=path;]$ESY__BINARY_PATH"
 
@@ -79,7 +79,7 @@ jobs:
     name: Publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
@@ -87,7 +87,7 @@ jobs:
           node-version: 12.x
 
       - name: Make NPM release skeleton
-        run: node scripts/release-make-skeleton.js
+        run: node script/release-make-skeleton.js
 
       - name: Download linux artifacts
         uses: actions/download-artifact@master

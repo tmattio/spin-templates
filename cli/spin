@@ -1,22 +1,2 @@
 (name cli)
 (description "A cross-platform Command Line Interface")
-
-(command (
-  (name "esy install")
-  (description "Download and lock the dependencies.")
-))
-
-(command (
-  (name "esy build")
-  (description "Ensure all dependencies are built and compile the project.")
-))
-
-(command (
-  (name "esy test")
-  (description "Starts the test runner.")
-))
-
-(command (
-  (name "esy start")
-  (description "Run the command line binary.")
-))

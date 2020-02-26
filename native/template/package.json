@@ -15,8 +15,11 @@
   "esy": {
     "build": "dune build -p #{self.name}",
     {% if syntax == 'Reason' -%}
-    "buildDev": "refmterr dune build -p #{self.name}",
+    "buildDev": "refmterr dune build --root . --only-package #{self.name}",
+    {% else -%}
+    "buildDev": "dune build --root . --only-package #{self.name}",
     {% endif -%}
+    "install": "esy-installer #{self.target_dir / 'default' / self.name '.install'}",
     "NOTE": "Optional release Section. Customizes result of `esy release`",
     "release": {
       "bin": {
@@ -27,86 +30,40 @@
       "ODOC_SYNTAX": "{% if syntax == 'Reason' %}re{% else %}ml{% endif %}"
     }
   },
-  "buildDirs": {
-    "test": {
-      "require": [
-        "base",
-        "{{ project_slug }}.lib",
-        "rely.lib"
-      ],
-      "flags": [
-        "-open",
-        "Base",
-        "-linkall",
-        "-g",
-        "-w",
-        "-9"
-      ],
-      "includeSubdirs": "unqualified",
-      "name": "{{ project_slug }}.test",
-      "namespace": "{{ project_slug | modulify }}_test"
-    },
-    "test_runner": {
-      "require": [
-        "{{ project_slug }}.test"
-      ],
-      "bin": {
-        "test-runner.exe": "test_runner_app.{% if syntax == 'Reason' %}re{% else %}ml{% endif %}"
-      }
-    },
-    "lib": {
-      "require": [
-        "base"
-      ],
-      "flags": [
-        "-open",
-        "Base"
-      ],
-      "includeSubdirs": "unqualified",
-      "name": "{{ project_slug }}.lib",
-      "namespace": "{{ project_slug | modulify }}"
-    },
-    "bin": {
-      "require": [
-        "base",
-        "stdio",
-        "{{ project_slug }}.lib"
-      ],
-      "flags": [
-        "-open",
-        "Base"
-      ],
-      "bin": {
-        "{{ project_slug }}.exe": "{{ project_slug | snake_case }}_app.{% if syntax == 'Reason' %}re{% else %}ml{% endif %}"
-      },
-      "includeSubdirs": "unqualified"
-    }
-  },
-  "dependencies": {
-    {% if syntax == 'Reason' -%}
-    "@esy-ocaml/reason": "*",
-    {% endif -%}
-    "@opam/base": "v0.13.0",
-    "@opam/dune": "*",
-    "@opam/stdio": "*",
-    "@reason-native/rely": "*",
+  "peerDependencies": {
     "ocaml": ">= 4.6.0"
   },
+  "dependencies": {
+    "@opam/base": "*",
+    "@opam/stdio": "*",
+    {% if syntax == 'Reason' -%}
+    "@opam/reason": "*",
+    {% endif -%}
+    "@opam/dune": ">= 2.0"
+  },
   "devDependencies": {
+    "@opam/dune-release": "*",
     "@opam/merlin": "*",
     "@opam/odoc": "*",
     "@opam/utop": "*",
-    "@pesy/esy-pesy": "0.1.0-alpha.5",
+    {% if syntax == 'OCaml' -%}
+    "@opam/ocamlformat": "*",
+    {%- endif %}
+    {% if test_framework == 'Rely' -%}
+    "@reason-native/rely": "*",
+    {% else -%}
+    "@opam/alcotest": "*",
+    {% endif -%}
     {% if syntax == 'Reason' -%}
     "ocaml": "~4.8.1000",
     "refmterr": "*"
-    {%- else -%}
+    {% else -%}
     "ocaml": "~4.8.1000"
     {%- endif %}
   },
   "scripts": {
     "start": "esy x {{ project_slug }}.exe",
-    "test": "esy x test-runner.exe",
+    "test": "esy {% if test_framework == 'Rely' %}dune exec test/test_runner.exe{% else %}dune build @test/runtest -f{% endif %}",
     "doc": "esy dune build @doc",
     "doc-path": "esy echo #{self.target_dir}/default/_doc/_html/index.html",
     "format": "esy dune build @fmt --auto-promote",

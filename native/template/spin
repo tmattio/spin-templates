@@ -31,9 +31,50 @@
   (values (Reason OCaml))
 ))
 
+(cfg_list (
+  (name package_manager)
+  (prompt "Which package manager do you use?")
+  (values (Esy Opam))
+  (default "{% if syntax == 'Reason' %}Esy{% else %}Opam{% endif -%}")
+))
+
+(cfg_list (
+  (name test_framework)
+  (prompt "Which test framework do you prefer?")
+  (values (Rely Alcotest))
+  (default "{% if syntax == 'Reason' %}Rely{% else %}Alcotest{% endif -%}")
+))
+
+(cfg_list (
+  (name ci_cd)
+  (prompt "Which CI/CD platform do you use")
+  (values (Github None))
+  (default Github)
+))
+
 (ignore (
   (files (.*\.re .*\.rei))
   (condition "{{ syntax != 'Reason' }}")
+))
+
+(ignore (
+  (files ("test/support/test_framework\.\(re|ml\)"))
+  (condition "{{ test_framework != 'Rely' }}")
+))
+
+(ignore (
+  (files (\.github/.*))
+  (condition "{{ ci_cd != 'Github' }}")
+))
+
+(ignore (
+  (files (package\.json))
+  (condition "{{ package_manager != 'Esy' }}")
+))
+
+(ignore (
+  (files (Makefile))
+  (condition "{{ package_manager != 'Opam' }}")
 ))
 
 (ignore (
@@ -45,14 +86,60 @@
   (command esy)
   (args (install))
   (description "🎁  Installing packages. This might take a couple minutes.")
-))
-
-(post_install (
-  (command esy)
-  (args (pesy))
+  (condition "{{ package_manager == 'Esy' }}")
 ))
 
 (post_install (
   (command esy)
   (args (dune build))
+  (condition "{{ package_manager == 'Esy' }}")
+))
+
+(post_install (
+  (command opam)
+  (args (install --deps-only --with-test --with-doc -y .))
+  (description "🎁  Installing packages. This might take a couple minutes.")
+  (condition "{{ package_manager == 'Opam' }}")
+))
+
+(post_install (
+  (command make)
+  (args ())
+  (condition "{{ package_manager == 'Opam' }}")
+))
+
+(example_command (
+  (name "esy install")
+  (description "Download and lock the dependencies.")
+  (condition "{{ package_manager == 'Esy' }}")
+))
+
+(example_command (
+  (name "esy build")
+  (description "Ensure all dependencies are built and compile the project.")
+  (condition "{{ package_manager == 'Esy' }}")
+))
+
+(example_command (
+  (name "esy test")
+  (description "Starts the test runner.")
+  (condition "{{ package_manager == 'Esy' }}")
+))
+
+(example_command (
+  (name "opam install --deps-only --with-test -y .")
+  (description "Download the dependencies.")
+  (condition "{{ package_manager == 'Opam' }}")
+))
+
+(example_command (
+  (name "make")
+  (description "Build the dependencies and the project.")
+  (condition "{{ package_manager == 'Opam' }}")
+))
+
+(example_command (
+  (name "make test")
+  (description "Starts the test runner.")
+  (condition "{{ package_manager == 'Opam' }}")
 ))

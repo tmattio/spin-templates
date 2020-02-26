@@ -2,7 +2,7 @@ open Cmdliner;
 open {{ project_slug | modulify }};
 
 let run = () => {
-  Console.log("Hello World!");
+  Stdio.print_endline("Hello World!");
   Lwt.return();
 };
 

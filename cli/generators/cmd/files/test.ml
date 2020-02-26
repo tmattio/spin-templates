@@ -1,4 +1,5 @@
 open Test_framework
+open {{ project_slug | modulify }}
 
 let () =
   describe "Test Integration `{{ project_slug }} {{ cmd_name | slugify }}`"

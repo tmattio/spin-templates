@@ -1,17 +1,2 @@
 (name react)
 (description "A React application in Reason.")
-
-(command (
-  (name "yarn start")
-  (description "Starts the development server.")
-))
-
-(command (
-  (name "yarn build")
-  (description "Bundles the app into static files for production.")
-))
-
-(command (
-  (name "yarn test")
-  (description "Starts the test runner.")
-))

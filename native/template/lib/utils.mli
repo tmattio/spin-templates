@@ -1,9 +1,9 @@
 (** The Utils module define helper functions commonly used throughout the
     project. *)
 
-val hello : unit -> string
-(** Returns a colorful "Hello, World" message.
+val greet : string -> string
+(** Returns a greeting message.
 
     {4 Examples}
 
-    {[ print_endline @@ hello () ]} *)
+    {[ print_endline @@ greet "Jane" ]} *)

@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 12
 
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Cache esy dependencies
         uses: actions/cache@v1
         id: cache
@@ -38,7 +38,7 @@ jobs:
         run: esy install
 
       - name: Build
-        run: esy build
+        run: esy build --release
 
       - name: Check formatting
         run: esy dune build @fmt

@@ -20,8 +20,10 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         syntax: [1, 2]
+        package-manager: [1, 2]
+        test-framework: [1, 2]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - uses: actions/setup-node@v1
         with:
@@ -41,7 +43,7 @@ jobs:
         run: |
           mkdir _generated
           cd _generated
-          printf 'Test Template\n\n\nName\nusername\n${{ matrix.syntax }}\n' | spin new ../native .
+          printf 'Test Template\n\n\nName\nusername\n${{ matrix.syntax }}\n${{ matrix.package-manager }}\n${{ matrix.test-framework }}\nNone\n' | spin new ../native .
 
       - name: Run tests
         run: esy test
