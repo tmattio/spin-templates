@@ -20,7 +20,7 @@ opam pin add {{ project_slug }} https://github.com/{{ github_username }}/{{ proj
 ### With `esy` on native projects
 
 ```bash
-esy add tmattio/{{ project_slug }}
+esy add {{ github_username }}/{{ project_slug }}
 ```
 
 ### With `npm` on Bucklescript projects
@@ -38,7 +38,7 @@ Create an `esy.json` file with the content:
     "ocaml": "~4.6.1000"
   },
   "resolutions": {
-    "{{ project_slug }}": "tmattio/{{ project_slug }}"
+    "{{ project_slug }}": "{{ github_username }}/{{ project_slug }}"
   }
 }
 ```
