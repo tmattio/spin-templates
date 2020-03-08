@@ -1,0 +1,5 @@
+(executables
+ (names simple_example)
+ (modules (:standard))
+ (libraries base {{ project_slug }}.lib)
+ (flags -open Base))

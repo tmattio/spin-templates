@@ -1,0 +1,66 @@
+{
+  "name": "{{ project_slug }}",
+  "description": "{{ project_description }}",
+  "author": "{{ author_name }}{% if author_email %} <{{ author_email }}>{% endif %}",
+  "license": "MIT",
+  "homepage": "https://github.com/{{ github_username }}/{{ project_slug }}",
+  "bugs": {
+    "url": "https://github.com/{{ github_username }}/{{ project_slug }}/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/{{ github_username }}/{{ project_slug }}.git"
+  },
+  "esy": {
+    "build": "dune build -p #{self.name}",
+    {%- if syntax == 'Reason' %}
+    "buildDev": "refmterr dune build --root . --only-package #{self.name}",
+    {% else %}
+    "buildDev": "dune build --root . --only-package #{self.name}",
+    {% endif -%}
+    "install": "esy-installer #{self.target_dir / 'default' / self.name '.install'}",
+    "buildEnv": {
+      "ODOC_SYNTAX": "{% if syntax == 'Reason' %}re{% else %}ml{% endif %}"
+    }
+  },
+  "peerDependencies": {
+    "ocaml": ">= 4.6.0"
+  },
+  "dependencies": {
+    "@opam/base": "*",
+    "@opam/stdio": "*",
+    {%- if syntax == 'Reason' %}
+    "@opam/reason": "*",
+    {%- endif %}
+    "@opam/dune": ">= 2.0"
+  },
+  "devDependencies": {
+    "@opam/dune-release": "*",
+    "@opam/merlin": "*",
+    "@opam/odoc": "*",
+    "@opam/utop": "*",
+    {%- if syntax == 'OCaml' %}
+    "@opam/ocamlformat": "*",
+    {%- endif -%}
+    {%- if test_framework == 'Rely' %}
+    "@reason-native/rely": "*",
+    {%- else %}
+    "@opam/alcotest": "*",
+    {%- endif -%}
+    {%- if syntax == 'Reason' %}
+    "ocaml": "~4.8.1000",
+    "refmterr": "*"
+    {%- else %}
+    "ocaml": "~4.8.1000"
+    {%- endif %}
+  },
+  "scripts": {
+    "start": "esy x {{ project_slug }}.exe",
+    "test": "esy {% if test_framework == 'Rely' %}dune exec test/test_runner.exe{% else %}dune build @test/runtest -f{% endif %}",
+    "doc": "esy dune build @doc",
+    "doc-path": "esy echo #{self.target_dir}/default/_doc/_html/index.html",
+    "format": "esy dune build @fmt --auto-promote",
+    "watch": "esy dune build -p #{self.name} --watch",
+    "utop": "esy dune utop lib -- -implicit-bindings"
+  }
+}

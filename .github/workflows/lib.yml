@@ -1,0 +1,54 @@
+name: lib
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/lib.yml
+      - lib/template/**
+  pull_request:
+    paths:
+      - .github/workflows/lib.yml
+      - lib/template/**
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        syntax: [1, 2]
+        package-manager: [1, 2]
+        test-framework: [1, 2]
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Cache esy dependencies
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: ~/.esy
+          key: ${{ runner.os }}-esy
+
+      - name: Install npm dependencies
+        run: npm install -g esy@latest @tmattio/spin
+
+      - name: Generate template
+        run: |
+          mkdir _generated
+          cd _generated
+          printf 'Test Template\n\n\nName\nusername\n${{ matrix.syntax }}\n${{ matrix.package-manager }}\n${{ matrix.test-framework }}\nNone\n' | spin new ../lib .
+
+      - name: Run tests
+        run: esy test
+        working-directory: ./_generated
+
+      - name: Run binary
+        run: esy start
+        working-directory: ./_generated
