@@ -13,9 +13,9 @@
   },
   "esy": {
     "build": "dune build -p #{self.name}",
-    {% if syntax == 'Reason' -%}
+    {%- if syntax == 'Reason' %}
     "buildDev": "refmterr dune build --root . --only-package #{self.name}",
-    {% else -%}
+    {% else %}
     "buildDev": "dune build --root . --only-package #{self.name}",
     {% endif -%}
     "install": "esy-installer #{self.target_dir / 'default' / self.name '.install'}",
@@ -31,9 +31,9 @@
     "@opam/stdio": "*",
     "@opam/cmdliner": "*",
     "@opam/lwt": "*",
-    {% if syntax == 'Reason' -%}
+    {%- if syntax == 'Reason' %}
     "@opam/reason": "*",
-    {% endif -%}
+    {%- endif %}
     "@opam/dune": ">= 2.0"
   },
   "devDependencies": {
@@ -41,18 +41,18 @@
     "@opam/merlin": "*",
     "@opam/odoc": "*",
     "@opam/utop": "*",
-    {% if syntax == 'OCaml' -%}
+    {%- if syntax == 'OCaml' %}
     "@opam/ocamlformat": "*",
-    {%- endif %}
-    {% if test_framework == 'Rely' -%}
+    {%- endif -%}
+    {%- if test_framework == 'Rely' %}
     "@reason-native/rely": "*",
-    {% else -%}
+    {%- else %}
     "@opam/alcotest": "*",
-    {% endif -%}
-    {% if syntax == 'Reason' -%}
+    {%- endif -%}
+    {%- if syntax == 'Reason' %}
     "ocaml": "~4.8.1000",
     "refmterr": "*"
-    {% else -%}
+    {%- else %}
     "ocaml": "~4.8.1000"
     {%- endif %}
   },
