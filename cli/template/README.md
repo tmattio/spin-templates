@@ -5,7 +5,10 @@
 {%- endif %}
 [![NPM Version](https://badge.fury.io/js/%40{{ npm_username }}%2F{{ project_slug }}.svg)](https://badge.fury.io/js/%40{{ npm_username }}%2F{{ project_slug }})
 
+{%- if project_description %}
+
 {{ project_description }}
+{%- endif %}
 
 ## Features
 
