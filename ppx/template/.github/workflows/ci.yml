@@ -1,30 +1,22 @@
-{% raw -%}
 name: CI
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: [push, pull_request]
 
+{% if package_manager == 'Esy' -%}
+{% raw -%}
 jobs:
   build:
-    name: Build and test native
+    name: Build and test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        node-version: [12.x]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 12
 
+      - uses: actions/checkout@v2
       - name: Cache esy dependencies
         uses: actions/cache@v1
         id: cache
@@ -50,20 +42,58 @@ jobs:
         run: esy build --release
 
       - name: Check formatting
-        run: esy dune build @fmt
+        run: esy format
 
       - name: Run tests
         run: esy test
-
+        
       - name: Export dependencies
         run: esy export-dependencies
+{%- endraw %}
+{% else -%}
+{% raw -%}
+jobs:
+  build:
+    name: Build and test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        ocaml-version: ['4.09.0', '4.08.1']
+    steps:
+      - uses: avsm/setup-ocaml@master
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - uses: actions/checkout@v2
+
+      - name: Pin package
+        run: opam pin add {% endraw %}{{ project_slug }}{% raw %}.dev -n .
+
+      - name: Query and install external dependencies
+        run: opam depext -yt {% endraw %}{{ project_slug }}{% raw %}
+
+      - name: Install dependencies
+        run: opam install -t . --deps-only
+
+      - name: Build
+        run: opam exec -- make
+
+      - name: Check formatting
+        run: opam exec -- make format
+
+      - name: Run tests
+        run: opam exec -- make test
+{%- endraw -%}
+{%- endif -%}
+{%- raw %}
 
   test_bs:
     name: Build and test bucklescript
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [12.x]
     steps:
       - uses: actions/checkout@v2
