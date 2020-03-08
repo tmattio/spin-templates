@@ -63,7 +63,7 @@
 ))
 
 (ignore (
-  (files ("test/support/test_framework\.\(re|ml\)"))
+  (files ("test/support/test_framework\.\(re\|ml\)" "{{ project_slug }}\.opam\.template"))
   (condition "{{ test_framework != 'Rely' }}")
 ))
 
