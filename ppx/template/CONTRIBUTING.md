@@ -2,7 +2,7 @@
 
 ## Setup your development environment
 
-{% if package_manager == 'Esy' %}
+{% if package_manager == 'Esy' -%}
 You need Esy, you can install the latest version from [npm](https://npmjs.com):
 
 ```bash
@@ -16,7 +16,9 @@ Then run the `esy` command from this project root to install and build depenenci
 ```bash
 esy
 ```
-{% else %}
+
+This project uses [Dune](https://dune.build/) as a build system, if you add a dependency in your `package.json` file, don't forget to add it to your `dune` and `dune-project` files too.
+{%- else -%}
 You need Opam, you can install it by following [Opam's documentation](https://opam.ocaml.org/doc/Install.html).
 
 With Opam installed, you can install the dependencies with:
@@ -30,9 +32,7 @@ Then, build the project with:
 ```bash
 make
 ```
-{% endif %}
-
-This project uses [Dune](https://dune.build/) as a build system, if you add a dependency in your `package.json` file, don't forget to add it to your `dune` and `dune-project` files too.
+{%- endif %}
 
 ### Running Tests
 
@@ -84,18 +84,20 @@ This assumes you have a command like [open-cli](https://github.com/sindresorhus/
 
 ### Releasing
 
-To release prebuilt binaries to all platforms, we use Github Actions to build each binary individually.
+To create a release and publish it on Opam, first update the `CHANGES.md` file with the last changes and the version that you want to release.
+The, you can run the script `script/release.sh`. The script will perform the following actions:
 
-The binaries are then uploaded to a Github Release and NPM automatically.
+- Create a tag with the version found in `{{ project_slug }}.opam`, and push it to your repository.
+- Create the distribution archive.
+- Publish the distribution archive to a Github Release.
+- Update the repository's `gh-pages` branch with the latest documentation.
+- Submit a PR on Opam's repository.
 
-To trigger the Release workflow, you need to push a git tag to the repository.
-We provide a script that will bump the version of the project, tag the commit and push it to Github:
+When the release is published on Github, the CI/CD will trigger the `Release` workflow which will perform the following actions
 
-```bash
-./script/release.sh
-```
-
-The script will release the current project version on Opam, update the documentation and push a new tag on Github.
+- Compile binaries for all supported platforms.
+- Create an NPM release containing the pre-built binaries.
+- Publish the NPM release to the registry.
 
 ### Repository Structure
 
@@ -118,9 +120,6 @@ The following snippet describes {{ project_name }}'s repository structure.
 ├── test_bs/
 |   Bucklescript integration tests for {{ project_name }}.
 │
-├── test_runner/
-|   Source for the test runner's binary.
-|
 ├── dune-project
 |   Dune file used to mark the root of the project and define project-wide parameters.
 |   For the documentation of the syntax, see https://dune.readthedocs.io/en/stable/dune-files.html#dune-project

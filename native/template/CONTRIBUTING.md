@@ -2,7 +2,7 @@
 
 ## Setup your development environment
 
-{% if package_manager == 'Esy' %}
+{% if package_manager == 'Esy' -%}
 You need Esy, you can install the latest version from [npm](https://npmjs.com):
 
 ```bash
@@ -16,7 +16,9 @@ Then run the `esy` command from this project root to install and build depenenci
 ```bash
 esy
 ```
-{% else %}
+
+This project uses [Dune](https://dune.build/) as a build system, if you add a dependency in your `package.json` file, don't forget to add it to your `dune` and `dune-project` files too.
+{%- else -%}
 You need Opam, you can install it by following [Opam's documentation](https://opam.ocaml.org/doc/Install.html).
 
 With Opam installed, you can install the dependencies with:
@@ -30,9 +32,7 @@ Then, build the project with:
 ```bash
 make
 ```
-{% endif %}
-
-This project uses [Dune](https://dune.build/) as a build system, if you add a dependency in your `package.json` file, don't forget to add it to your `dune` and `dune-project` files too.
+{%- endif %}
 
 ### Running Binary
 
@@ -101,9 +101,6 @@ The following snippet describes {{ project_name }}'s repository structure.
 │
 ├── test/
 |   Unit tests and integration tests for {{ project_name }}.
-│
-├── test_runner/
-|   Source for the test runner's binary.
 │
 ├── dune-project
 |   Dune file used to mark the root of the project and define project-wide parameters.
