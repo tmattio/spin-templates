@@ -1,6 +1,5 @@
 (lang dune 2.0)
 (name {{ project_slug }})
-(version 0.1.0)
 (source (github {{ github_username }}/{{ project_slug }}))
 (license MIT)
 (authors "{{ author_name }}{% if author_email %} <{{ author_email }}>{% endif %}")
