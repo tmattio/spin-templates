@@ -12,7 +12,7 @@
 (cfg_string (
   (name project_description)
   (prompt "Description")
-  (default "")
+  (default "A short, but powerful statement about your project")
 ))
 
 (cfg_string (
@@ -23,8 +23,8 @@
 (cfg_list (
   (name css_framework)
   (prompt "Which CSS framework do you use?")
-  (values ("TailwindCSS" "None"))
-  (default "None")
+  (values (TailwindCSS None))
+  (default None)
 ))
 
 (cfg_list (

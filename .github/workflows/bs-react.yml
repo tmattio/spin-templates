@@ -1,16 +1,16 @@
-name: react
+name: bs-react
 
 on:
   push:
     branches:
       - master
     paths:
-      - .github/workflows/react.yml
-      - react/template/**
+      - .github/workflows/bs-react.yml
+      - bs-react/template/**
   pull_request:
     paths:
-      - .github/workflows/react.yml
-      - react/template/**
+      - .github/workflows/bs-react.yml
+      - bs-react/template/**
 
 jobs:
   build:
@@ -19,6 +19,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
+        # 1=TailwindCSS, 2=None
         css-framework: [1, 2]
     steps:
       - uses: actions/checkout@v2
@@ -41,7 +42,7 @@ jobs:
         run: |
           mkdir _generated
           cd _generated
-          printf 'Test Template\n\n\nName\n${{ matrix.css-framework }}\n2\n' | spin new ../react .
+          printf 'Test Template\n\n\nName\n${{ matrix.css-framework }}\n2\n' | spin new ../bs-react .
 
       - name: Run tests
         run: npm run test
