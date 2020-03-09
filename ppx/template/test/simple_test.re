@@ -2,7 +2,7 @@
 open Test_framework;
 open {{ project_slug | modulify }};
 
-/** Test suite to showcase a simpler unit test with Alcotest */
+/** Test suite to showcase a simple unit test with Alcotest */
 
 let test_hello_with_name = ({expect}) => {
   let result = [%{{ project_slug | snake_case }} 5];
@@ -16,7 +16,7 @@ describe("Simple", ({test, _}) => {
 open Alcotest;
 open {{ project_slug | modulify }};
 
-/** Test suite to showcase a simpler unit test with Alcotest */
+/** Test suite to showcase a simple unit test with Alcotest */
 
 let test_simple_addition = () => {
   let result = [%{{ project_slug | snake_case }} 5];
@@ -24,5 +24,4 @@ let test_simple_addition = () => {
 };
 
 let suite = [("5 + 5 should equal 10", `Quick, test_simple_addition)];
-{% endif -%}
-
+{% endif %}

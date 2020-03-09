@@ -18,5 +18,9 @@ open {{ project_slug | modulify }}_test
     creating a new test suite, don't forget to add it here! *)
 
 let () =
-  Alcotest.run "{{ project_slug }}" [ "Utils", Utils_test.suite ]
+  Alcotest.run "{{ project_slug }}"
+    [ "Utils", Utils_test.suite
+    ; "Integration test `hello`", Cmd_hello_test.suite
+    ; "Integration test `--version`", Smoke_test.suite
+    ]
 {% endif -%}

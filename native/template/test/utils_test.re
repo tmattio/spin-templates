@@ -30,4 +30,4 @@ let suite = [
   ("can greet Tom", `Quick, test_hello_with_name("Tom")),
   ("can greet John", `Quick, test_hello_with_name("John")),
 ];
-{% endif -%}
+{% endif %}

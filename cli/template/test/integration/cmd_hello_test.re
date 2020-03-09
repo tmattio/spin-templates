@@ -1,10 +1,31 @@
+{% if test_framework == 'Rely' -%}
 open Test_framework;
 open {{ project_slug | modulify }};
 
-describe("Integration Test `{{ project_slug }} hello`", ({test, _}) => {
-  test("Validate standard output", ({expect}) => {
-    let output = Test_utils.run([|"hello", "World"|]);
-    let generated = expect.string(output |> String.strip);
-    generated.toMatch("Hello World!");
-  })
+/** Integration test suite for the hello command. */
+
+let test_hello_world = ({expect}) => {
+  let output = Test_utils.run([|"hello", "world"|]);
+  let generated = expect.string(output |> String.strip);
+  expect.string(generated).toEqual("Hello World!");
+};
+
+describe("Integration test `hello`", ({test, _}) => {
+  test("can display hello world", test_hello_world);
 });
+{%- else -%}
+open Alcotest;
+open {{ project_slug | modulify }};
+
+/** Integration test suite for the hello command. */
+
+let test_hello_world = () => {
+  let output = Test_utils.run([|"hello", "world"|]);
+  let generated = expect.string(output |> String.strip);
+  check(string, "same string", generated, "Hello World!");
+};
+
+let suite = [
+  ("can display hello world", `Quick, test_hello_world),
+];
+{% endif %}
