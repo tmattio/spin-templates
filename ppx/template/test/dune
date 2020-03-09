@@ -2,6 +2,8 @@
  (name {{ project_slug | snake_case }}_test)
  (flags -open Base -linkall -g -w -9)
  (libraries base {% if test_framework == 'Rely' %}rely.lib{% else %}alcotest{% endif %} {{ project_slug }}.lib)
+ (preprocess
+  (pps {{ project_slug }}.lib))
  (modules
   (:standard \ test_runner)))
 
