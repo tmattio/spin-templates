@@ -109,7 +109,7 @@
 
 (post_install (
   (command make)
-  (args ())
+  (args (build))
   (condition "{{ package_manager == 'Opam' }}")
 ))
 
