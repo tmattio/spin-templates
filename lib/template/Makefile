@@ -1,7 +1,9 @@
-.PHONY: all test clean doc doc-path format watch utop release
+.PHONY: all build test clean doc doc-path format watch utop release
 
 all:
 	dune build @install
+
+build:
 	dune build
 
 install:
@@ -27,3 +29,6 @@ watch:
 
 utop:
 	dune utop lib -- -implicit-bindings
+
+release:
+	sh script/release.sh

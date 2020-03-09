@@ -1,11 +1,21 @@
-.PHONY: all test clean doc doc-path format watch utop release
+.PHONY: all build test clean doc doc-path format watch utop
+
+ifeq (start,$(firstword $(MAKECMDGOALS)))
+  START_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  $(eval $(START_ARGS):;@:)
+endif
 
 all:
 	dune build @install
+
+build:
 	dune build
 
 install:
 	dune install
+
+start: all
+	dune exec bin/{{ project_slug | snake_case }}_app.exe $(START_ARGS)
 
 test:
 	{% if test_framework == 'Rely' %}dune exec test/test_runner.exe{% else %}dune build @test/runtest -f{% endif %}

@@ -1,8 +1,18 @@
-.PHONY: all test clean doc doc-path format watch utop release
+.PHONY: all build test clean doc doc-path format watch utop release
+
+ifeq (start,$(firstword $(MAKECMDGOALS)))
+  START_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  $(eval $(START_ARGS):;@:)
+endif
 
 all:
 	dune build @install
+
+build:
 	dune build
+
+start: all
+	dune exec bin/{{ project_slug | snake_case }}_app.exe $(START_ARGS)
 
 install:
 	dune install
@@ -27,3 +37,6 @@ watch:
 
 utop:
 	dune utop lib -- -implicit-bindings
+
+release:
+	sh script/release.sh
