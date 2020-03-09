@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@opam/base": "*",
-    "@opam/stdio": "*",
     {%- if syntax == 'Reason' %}
     "@opam/reason": "*",
     {%- endif %}
