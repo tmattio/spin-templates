@@ -13,11 +13,11 @@ if [ -d ".git" ]; then
     echo "Please run the release script on master"
     exit 1
   else
-    esy x dune-release tag
-    esy x dune-release distrib
-    esy x dune-release publish -y
-    esy x dune-release opam pkg
-    esy x dune-release opam submit --no-auto-open -y
+    {% if package_manager == 'Esy' %}esy x {% endif %}dune-release tag
+    {% if package_manager == 'Esy' %}esy x {% endif %}dune-release distrib
+    {% if package_manager == 'Esy' %}esy x {% endif %}dune-release publish -y
+    {% if package_manager == 'Esy' %}esy x {% endif %}dune-release opam pkg
+    {% if package_manager == 'Esy' %}esy x {% endif %}dune-release opam submit --no-auto-open -y
   fi
 else
   echo "This project is not a git repository. Run `git init` first to be able to release."
