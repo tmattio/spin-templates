@@ -108,6 +108,12 @@
 ))
 
 (post_install (
+  (command opam)
+  (args (install -y dune-release merlin ocamlformat utop))
+  (condition "{{ package_manager == 'Opam' }}")
+))
+
+(post_install (
   (command make)
   (args (build))
   (condition "{{ package_manager == 'Opam' }}")
@@ -138,7 +144,7 @@
 ))
 
 (example_command (
-  (name "make")
+  (name "make build")
   (description "Build the dependencies and the project.")
   (condition "{{ package_manager == 'Opam' }}")
 ))
