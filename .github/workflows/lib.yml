@@ -43,7 +43,7 @@ jobs:
         run: |
           mkdir _generated
           cd _generated
-          printf 'Test Template\n\n\nName\nusername\n${{ matrix.syntax }}\n${{ matrix.package-manager }}\n${{ matrix.test-framework }}\nNone\n' | spin new ../lib .
+          printf 'Test Template\n\n\nName\nusername\n${{ matrix.syntax }}\n${{ matrix.package-manager }}\n${{ matrix.test-framework }}\n2\n' | spin new ../lib .
 
       - name: Run tests
         run: esy test
