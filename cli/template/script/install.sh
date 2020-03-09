@@ -44,7 +44,7 @@ download() {
   if [ "$RELEASE" == "latest" ]; then
     URL=https://github.com/{{ github_username }}/{{ project_slug }}/releases/latest/download/$FILENAME.zip
   else
-    URL=https://github.com/{{ github_username }}/{{ project_slug }}/releases/download/v$RELEASE/$FILENAME.zip
+    URL=https://github.com/{{ github_username }}/{{ project_slug }}/releases/download/$RELEASE/$FILENAME.zip
   fi
 
   DOWNLOAD_DIR=$(mktemp -d)
