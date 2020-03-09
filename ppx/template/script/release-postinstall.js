@@ -7,7 +7,7 @@ const fs = require("fs");
 const platform = process.platform;
 
 const binariesToCopy = [
-  "{{ project_slug }}.exe"
+  "{{ project_slug }}"
 ];
 
 function find_arch() {
