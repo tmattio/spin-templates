@@ -15,11 +15,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Fetch git tags
+        run: git fetch --tags --force
+
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
           registry-url: "https://registry.npmjs.org"
+
+      - name: Set macOS deployment target
+        if: matrix.os == 'macos-latest'
+        run: |
+          echo "::set-env name=MACOSX_DEPLOYMENT_TARGET=10.9"
 
       - name: Cache esy dependencies
         uses: actions/cache@v1
@@ -48,7 +56,7 @@ jobs:
       - name: Substitute watermarks
         run: esy dune subst
 
-      - name: Build changes
+      - name: Build subst changes
         run: esy dune build
 
       - name: Run tests
@@ -81,6 +89,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Fetch git tags
+        run: git fetch --tags --force
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
