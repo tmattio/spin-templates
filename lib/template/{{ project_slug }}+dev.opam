@@ -1,0 +1,13 @@
+# This file contains the development dependencies of the project.
+opam-version: "2.0"
+maintainer: ["{{ author_name }}{% if author_email %} <{{ author_email }}>{% endif %}"]
+authors: ["{{ author_name }}{% if author_email %} <{{ author_email }}>{% endif %}"]
+homepage: "https://github.com/{{ github_username }}/{{ project_slug }}"
+doc: "https://tmattio.github.io/spin"
+bug-reports: "https://github.com/{{ github_username }}/{{ project_slug }}/issues"
+depends: [
+  "dune-release" {dev}
+  "merlin" {dev}
+  "ocamlformat" {dev}
+  "utop" {dev}
+]

@@ -18,10 +18,6 @@ depends: [
   "alcotest" {with-test}
   {% endif -%}
   "odoc" {with-doc}
-  "dune-release" {dev}
-  "ocamlformat" {dev}
-  "merlin" {dev}
-  "utop" {dev}
   {% if syntax == 'Reason' -%}
   "reason" {build}
   {% endif -%}

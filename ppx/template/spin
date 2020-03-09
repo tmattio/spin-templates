@@ -78,7 +78,7 @@
 ))
 
 (ignore (
-  (files (Makefile))
+  (files (Makefile "{{ project_slug }}\+dev\.opam"))
   (condition "{{ package_manager != 'Opam' }}")
 ))
 
