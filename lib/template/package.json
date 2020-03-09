@@ -23,34 +23,30 @@
       "ODOC_SYNTAX": "{% if syntax == 'Reason' %}re{% else %}ml{% endif %}"
     }
   },
-  "peerDependencies": {
-    "ocaml": ">= 4.6.0"
-  },
   "dependencies": {
     "@opam/base": "*",
+    "@opam/dune": ">= 2.0",
     {%- if syntax == 'Reason' %}
     "@opam/reason": "*",
     {%- endif %}
-    "@opam/dune": ">= 2.0"
+    "ocaml": ">= 4.6.0"
   },
   "devDependencies": {
+    {%- if test_framework == 'Alcotest' %}
+    "@opam/alcotest": "*",
+    {% endif -%}
     "@opam/dune-release": "*",
     "@opam/merlin": "*",
-    "@opam/odoc": "*",
-    "@opam/utop": "*",
     {%- if syntax == 'OCaml' %}
     "@opam/ocamlformat": "*",
-    {%- endif -%}
+    {% endif -%}
+    "@opam/odoc": "*",
+    "@opam/utop": "*",
     {%- if test_framework == 'Rely' %}
-    "@reason-native/rely": "*",
-    {%- else %}
-    "@opam/alcotest": "*",
+    "@reason-native/rely": "*"{% if syntax == 'Reason' %},{% endif %}
     {%- endif -%}
     {%- if syntax == 'Reason' %}
-    "ocaml": "~4.8.1000",
     "refmterr": "*"
-    {%- else %}
-    "ocaml": "~4.8.1000"
     {%- endif %}
   },
   "scripts": {
@@ -59,6 +55,7 @@
     "doc-path": "esy echo #{self.target_dir}/default/_doc/_html/index.html",
     "format": "esy dune build @fmt --auto-promote",
     "watch": "esy dune build -p #{self.name} --watch",
-    "utop": "esy dune utop lib -- -implicit-bindings"
+    "utop": "esy dune utop lib -- -implicit-bindings",
+    "release": "./script/release.sh"
   }
 }

@@ -23,35 +23,31 @@
       "ODOC_SYNTAX": "{% if syntax == 'Reason' %}re{% else %}ml{% endif %}"
     }
   },
-  "peerDependencies": {
-    "ocaml": ">= 4.6.0"
-  },
   "dependencies": {
     "@opam/base": "*",
+    "@opam/dune": ">= 2.0",
     "@opam/ppxlib": "*",
     {%- if syntax == 'Reason' %}
     "@opam/reason": "*",
     {%- endif %}
-    "@opam/dune": ">= 2.0"
+    "ocaml": ">= 4.6.0"
   },
   "devDependencies": {
+    {%- if test_framework == 'Alcotest' %}
+    "@opam/alcotest": "*",
+    {% endif -%}
     "@opam/dune-release": "*",
     "@opam/merlin": "*",
-    "@opam/odoc": "*",
-    "@opam/utop": "*",
     {%- if syntax == 'OCaml' %}
     "@opam/ocamlformat": "*",
-    {%- endif -%}
+    {% endif -%}
+    "@opam/odoc": "*",
+    "@opam/utop": "*",
     {%- if test_framework == 'Rely' %}
-    "@reason-native/rely": "*",
-    {%- else %}
-    "@opam/alcotest": "*",
+    "@reason-native/rely": "*"{% if syntax == 'Reason' %},{% endif %}
     {%- endif -%}
     {%- if syntax == 'Reason' %}
-    "ocaml": "~4.8.1000",
     "refmterr": "*"
-    {%- else %}
-    "ocaml": "~4.8.1000"
     {%- endif %}
   },
   "scripts": {
