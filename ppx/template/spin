@@ -73,11 +73,6 @@
 ))
 
 (ignore (
-  (files (package\.json))
-  (condition "{{ package_manager != 'Esy' }}")
-))
-
-(ignore (
   (files (Makefile "{{ project_slug }}\+dev\.opam"))
   (condition "{{ package_manager != 'Opam' }}")
 ))
@@ -104,6 +99,12 @@
   (command opam)
   (args (install --deps-only --with-test --with-doc -y .))
   (description "🎁  Installing packages. This might take a couple minutes.")
+  (condition "{{ package_manager == 'Opam' }}")
+))
+
+(post_install (
+  (command opam)
+  (args (install -y dune-release merlin ocamlformat utop))
   (condition "{{ package_manager == 'Opam' }}")
 ))
 
@@ -144,7 +145,7 @@
 ))
 
 (example_command (
-  (name "make")
+  (name "make build")
   (description "Build the dependencies and the project.")
   (condition "{{ package_manager == 'Opam' }}")
 ))

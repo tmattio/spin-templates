@@ -12,7 +12,7 @@
     "in-source": true
   }],
   "ppx-flags": [
-    "esy x {{ project_slug }}.exe"
+    "esy x {{ project_slug }}"
   ],
   "suffix": ".bs.js",
   "namespace": true,
