@@ -6,7 +6,7 @@ open {{ project_slug | modulify }};
 
 let test_hello_world = ({expect}) => {
   let output = Test_utils.run([|"hello", "world"|]);
-  let generated = expect.string(output |> String.strip);
+  let generated = String.strip(output);
   expect.string(generated).toEqual("Hello World!");
 };
 
@@ -21,7 +21,7 @@ open {{ project_slug | modulify }};
 
 let test_hello_world = () => {
   let output = Test_utils.run([|"hello", "world"|]);
-  let generated = expect.string(output |> String.strip);
+  let generated = String.strip(output);
   check(string, "same string", generated, "Hello World!");
 };
 

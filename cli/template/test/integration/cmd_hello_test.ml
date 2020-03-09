@@ -6,7 +6,7 @@ open {{ project_slug | modulify }}
 
 let test_hello_world name { expect } =
   let output = Test_utils.run [| "hello"; "World" |] in
-  let generated = expect.string (output |> String.strip) in
+  let generated = String.strip output in
   (expect.string generated).toEqual "Hello World!"
 
 let () =
@@ -20,7 +20,7 @@ open {{ project_slug | modulify }}
 
 let test_hello_world name () =
   let output = Test_utils.run [| "hello"; "World" |] in
-  let generated = expect.string (output |> String.strip) in
+  let generated = String.strip output in
   check string "same string" generated "Hello World!"
 
 let suite =

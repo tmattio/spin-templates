@@ -6,7 +6,7 @@ open {{ project_slug | modulify }};
 
 let test_version = ({expect}) => {
   let version = Test_utils.run([|"--version"|]);
-  let generated = expect.string(version |> String.strip);
+  let generated = String.strip(version);
   expect.string(generated).toEqual("%%VERSION%%");
 };
 
@@ -21,7 +21,7 @@ open {{ project_slug | modulify }};
 
 let test_version = () => {
   let version = Test_utils.run([|"--version"|]);
-  let generated = expect.string(version |> String.strip);
+  let generated = String.strip(version);
   check(string, "same string", generated, "%%VERSION%%");
 };
 

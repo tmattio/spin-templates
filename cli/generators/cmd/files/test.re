@@ -6,7 +6,7 @@ open {{ project_slug | modulify }};
 
 let test_{{ cmd_name | snake_case }} = ({expect}) => {
   let output = Test_utils.run([|"{{ cmd_name | slugify }}"|]);
-  let generated = expect.string(output |> String.strip);
+  let generated = String.strip(output);
   expect.string(generated).toEqual("Hello World!");
 };
 
@@ -21,7 +21,7 @@ open {{ project_slug | modulify }};
 
 let test_{{ cmd_name | snake_case }} = () => {
   let output = Test_utils.run([|"{{ cmd_name | slugify }}"|]);
-  let generated = expect.string(output |> String.strip);
+  let generated = String.strip(output);
   check(string, "same string", generated, "Hello World!");
 };
 
