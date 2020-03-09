@@ -55,7 +55,7 @@
     {%- endif %}
   },
   "scripts": {
-    "start": "esy x {{ project_slug }}.exe",
+    "start": "esy x {{ project_slug | snake_case }}_app",
     "test": "esy {% if test_framework == 'Rely' %}dune exec test/test_runner.exe{% else %}dune build @test/runtest -f{% endif %}",
     "doc": "esy dune build @doc",
     "doc-path": "esy echo #{self.target_dir}/default/_doc/_html/index.html",
