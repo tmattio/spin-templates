@@ -35,17 +35,17 @@
     "ocaml": ">= 4.6.0"
   },
   "devDependencies": {
-    {%- if test_framework == 'Alcotest' %}
+    {% if test_framework == 'Alcotest' -%}
     "@opam/alcotest": "*",
     {% endif -%}
     "@opam/dune-release": "*",
     "@opam/merlin": "*",
-    {%- if syntax == 'OCaml' %}
+    {% if syntax == 'OCaml' -%}
     "@opam/ocamlformat": "*",
     {% endif -%}
     "@opam/odoc": "*",
-    "@opam/utop": "*",
-    {%- if test_framework == 'Rely' %}
+    "@opam/utop": "*"{% if syntax == 'Reason' or test_framework == 'Rely'  %},{% endif %}
+    {% if test_framework == 'Rely' -%}
     "@reason-native/rely": "*"{% if syntax == 'Reason' %},{% endif %}
     {%- endif -%}
     {%- if syntax == 'Reason' %}
