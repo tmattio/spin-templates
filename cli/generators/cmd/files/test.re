@@ -10,8 +10,8 @@ let test_{{ cmd_name | snake_case }} = ({expect}) => {
   expect.string(generated).toEqual("Hello World!");
 };
 
-describe("Integration test `{{ cmd_name | slugify }}`", ({test, _}) => {
-  test("`{{ cmd_name | slugify }}` returns the expected output", test_{{ cmd_name | snake_case }});
+describe("Integration test {{ cmd_name | slugify }}", ({test, _}) => {
+  test("{{ cmd_name | slugify }} returns the expected output", test_{{ cmd_name | snake_case }});
 });
 {%- else -%}
 open Alcotest;
@@ -26,6 +26,6 @@ let test_{{ cmd_name | snake_case }} = () => {
 };
 
 let suite = [
-  ("`{{ cmd_name | slugify }}` returns the expected output", `Quick, test_{{ cmd_name | snake_case }}),
+  ("{{ cmd_name | slugify }} returns the expected output", `Quick, test_{{ cmd_name | snake_case }}),
 ];
 {% endif %}

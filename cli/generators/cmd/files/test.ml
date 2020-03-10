@@ -10,7 +10,7 @@ let test_{{ cmd_name | snake_case }} name { expect } =
   (expect.string generated).toEqual "Hello World!"
 
 let () =
-  describe "Integration test `hello`" @@ fun { test; _ } ->
+  describe "Integration test hello" @@ fun { test; _ } ->
   test "{{ cmd_name | slugify }}` returns the expected output" test_{{ cmd_name | snake_case }}
 {%- else -%}
 open Alcotest

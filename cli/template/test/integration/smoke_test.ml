@@ -4,7 +4,7 @@ open {{ project_slug | modulify }}
 
 (** Integration test suite that performs smoke tests. *)
 
-let test_version name { expect } =
+let test_version { expect } =
   let version = Test_utils.run [|"--version"|] in
   let generated = String.strip version in
   (expect.string generated).toEqual "%%VERSION%%"
@@ -18,7 +18,7 @@ open {{ project_slug | modulify }}
 
 (** Integration test suite that performs smoke tests. *)
 
-let test_version name () =
+let test_version () =
   let version = Test_utils.run [|"--version"|] in
   let generated = String.strip version in
   check string "same string" generated "%%VERSION%%"

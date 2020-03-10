@@ -14,7 +14,13 @@ let get_tempdir name =
 (** Run {{ project_name }} binary with the given arguments and return the
     standard output. *)
 let run args =
+  {%- if test_framework == 'Rely' and package_manager == 'Opam' %}
+  let arguments = args |> Array.append [| "make"; "start"; "--" |] in
+  {% elif test_framework == 'Rely' and package_manager == 'Esy' %}
   let arguments = args |> Array.append [| "esy"; "start" |] in
+  {%- elif test_framework == 'Alcotest' %}
+  let arguments = args |> Array.append [| "../bin/{{ project_slug | snake_case }}.exe" |] in
+  {%- endif %}
   let env =
     Unix.environment ()
     |> Array.append

@@ -20,7 +20,7 @@ open {{ project_slug | modulify }}_test
 let () =
   Alcotest.run "{{ project_slug }}"
     [ "Utils", Utils_test.suite
-    ; "Integration test `hello`", Cmd_hello_test.suite
-    ; "Integration test `--version`", Smoke_test.suite
+    ; "Integration test hello", Cmd_hello_test.suite
+    ; "Integration test --version", Smoke_test.suite
     ]
 {% endif -%}

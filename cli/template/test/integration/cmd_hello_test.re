@@ -10,7 +10,7 @@ let test_hello_world = ({expect}) => {
   expect.string(generated).toEqual("Hello World!");
 };
 
-describe("Integration test `hello`", ({test, _}) => {
+describe("Integration test hello", ({test, _}) => {
   test("can display hello world", test_hello_world);
 });
 {%- else -%}
