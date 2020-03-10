@@ -57,12 +57,12 @@ jobs:
           cd _generated
           printf 'Test Template\n\n\nName\nusername\nusername\n${{ matrix.syntax }}\n${{ matrix.package-manager }}\n${{ matrix.test-framework }}\n2\n' | spin new ../ppx .
 
-      - name: Run tests
+      - name: Run tests (Esy)
         if: matrix.package-manager == '1'
         run: esy test
         working-directory: ./_generated
 
-      - name: Run tests
+      - name: Run tests (Opam)
         if: matrix.package-manager == '2'
         run: make test
         working-directory: ./_generated
