@@ -1,16 +1,5 @@
 {
   "name": "{{ project_slug }}",
-  "description": "{{ project_description }}",
-  "author": "{{ author_name }}{% if author_email %} <{{ author_email }}>{% endif %}",
-  "license": "MIT",
-  "homepage": "https://github.com/{{ github_username }}/{{ project_slug }}",
-  "bugs": {
-    "url": "https://github.com/{{ github_username }}/{{ project_slug }}/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/{{ github_username }}/{{ project_slug }}.git"
-  },
   "esy": {
     "build": "dune build -p #{self.name}",
     {%- if syntax == 'Reason' %}
