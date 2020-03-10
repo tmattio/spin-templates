@@ -5,7 +5,7 @@ open {{ project_slug | modulify }};
 /** Integration test suite for the hello command. */
 
 let test_hello_world = ({expect}) => {
-  let output = Test_utils.run([|"hello", "world"|]);
+  let output = Test_utils.run([|"hello", "World"|]);
   let generated = String.strip(output);
   expect.string(generated).toEqual("Hello World!");
 };
