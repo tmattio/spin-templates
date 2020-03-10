@@ -54,10 +54,17 @@ for (const file of filesToTouch) {
 const pkgJson = {
   name: "@{{ npm_username }}/{{ project_slug }}",
   version: "%%VERSION%%",
-  description: package.description,
-  homepage: package.homepage,
-  license: package.license,
-  repository: package.repository,
+  description: "{{ project_description }}",
+  author: "{{ author_name }}{% if author_email %} <{{ author_email }}>{% endif %}",
+  license: "MIT",
+  homepage: "https://github.com/{{ github_username }}/{{ project_slug }}",
+  bugs: {
+    url: "https://github.com/{{ github_username }}/{{ project_slug }}/issues"
+  },
+  repository: {
+    type: "git",
+    url: "https://github.com/{{ github_username }}/{{ project_slug }}.git"
+  },
   scripts: {
     postinstall: "node postinstall.js"
   },

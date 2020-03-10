@@ -6,6 +6,10 @@
     "ocaml": "~4.8.1000"
   },
   "resolutions": {
-    "{{ project_slug }}": "link:../"
+    {%- if package_manager == 'Esy' %}
+    "{{ project_slug }}": "link:../esy.json"
+    {%- elif package_manager == 'Opam' %}
+    "@opam/{{ project_slug }}": "link:../{{ project_slug }}.opam"
+    {%- endif %}
   }
 }

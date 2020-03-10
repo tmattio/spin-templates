@@ -73,6 +73,11 @@
 ))
 
 (ignore (
+  (files (esy\.json))
+  (condition "{{ package_manager != 'Esy' }}")
+))
+
+(ignore (
   (files (Makefile "{{ project_slug }}\+dev\.opam"))
   (condition "{{ package_manager != 'Opam' }}")
 ))
