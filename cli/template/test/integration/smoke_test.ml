@@ -10,7 +10,7 @@ let test_version { expect } =
   (expect.string generated).toEqual "%%VERSION%%"
 
 let () =
-  describe "Integration test `--version" @@ fun { test; _ } ->
+  describe "Integration test --version" @@ fun { test; _ } ->
   test "can display the version" test_version
 {%- else -%}
 open Alcotest
