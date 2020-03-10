@@ -14,9 +14,9 @@ let get_tempdir name =
 {% if test_framework == 'Rely' -%}
 let exe_path = 
   {%- if package_manager == 'Opam' %}
-  Lwt_process.pread_chars ("", [| "opam"; "exec"; "--"; "dune"; "exec"; "which"; "{{ snake_case }}" |])
+  Lwt_process.pread_chars ("", [| "opam"; "exec"; "--"; "dune"; "exec"; "which"; "{{ project_slug }}" |])
   {%- elif package_manager == 'Esy' %}
-  Lwt_process.pread_chars ("", [| "esy"; "x"; "which"; "{{ snake_case }}" |])
+  Lwt_process.pread_chars ("", [| "esy"; "x"; "which"; "{{ project_slug }}" |])
   {%- endif %}
   |> Lwt_stream.to_string
   |> (Lwt.map String.strip)
