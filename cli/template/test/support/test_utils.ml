@@ -19,7 +19,7 @@ let run args =
   {% elif test_framework == 'Rely' and package_manager == 'Esy' %}
   let arguments = args |> Array.append [| "esy"; "start" |] in
   {%- elif test_framework == 'Alcotest' %}
-  let arguments = args |> Array.append [| "../bin/{{ project_slug | snake_case }}.exe" |] in
+  let arguments = args |> Array.append [| "../bin/{{ project_slug | snake_case }}_app.exe" |] in
   {%- endif %}
   let env =
     Unix.environment ()
