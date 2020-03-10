@@ -29,4 +29,5 @@
   {%- endif %}
   base
   cmdliner
-  lwt))
+  lwt
+  stdio))

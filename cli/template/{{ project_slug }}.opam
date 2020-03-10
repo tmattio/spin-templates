@@ -23,6 +23,7 @@ depends: [
   "base"
   "cmdliner"
   "lwt"
+  "stdio"
 ]
 build: [
   ["dune" "subst"] {pinned}

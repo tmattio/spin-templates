@@ -21,7 +21,6 @@ depends: [
   "reason" {build}
   {% endif -%}
   "base"
-  "stdio"
 ]
 build: [
   ["dune" "subst"] {pinned}
