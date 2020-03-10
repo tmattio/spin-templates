@@ -97,14 +97,22 @@
 
 (post_install (
   (command opam)
-  (args (install --deps-only --with-test --with-doc -y .))
-  (description "🎁  Installing packages. This might take a couple minutes.")
-  (condition "{{ package_manager == 'Opam' }}")
+  (args (switch create . 4.10.0 -y --deps-only))
+  (description "🐫  Creating local opam switch. This might take a couple minutes.")
+  (condition "{{ package_manager == 'Opam' and test_framework != 'Rely' }}")
 ))
 
 (post_install (
   (command opam)
-  (args (install -y dune-release merlin ocamlformat utop))
+  (args (switch create . 4.09.0 -y --deps-only))
+  (description "🐫  Creating local opam switch. This might take a couple minutes.")
+  (condition "{{ package_manager == 'Opam' and test_framework == 'Rely' }}")
+))
+
+(post_install (
+  (command make)
+  (args (dev))
+  (description "🎁  Installing packages. This might take a couple minutes.")
   (condition "{{ package_manager == 'Opam' }}")
 ))
 
@@ -139,8 +147,8 @@
 ))
 
 (example_command (
-  (name "opam install --deps-only --with-test -y .")
-  (description "Download the dependencies.")
+  (name "make dev")
+  (description "Download runtime and development dependencies.")
   (condition "{{ package_manager == 'Opam' }}")
 ))
 

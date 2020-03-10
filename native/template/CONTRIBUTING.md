@@ -24,13 +24,13 @@ You need Opam, you can install it by following [Opam's documentation](https://op
 With Opam installed, you can install the dependencies with:
 
 ```bash
-opam install --deps-only --with-test -y .
+make dev
 ```
 
 Then, build the project with:
 
 ```bash
-make
+make build
 ```
 {%- endif %}
 

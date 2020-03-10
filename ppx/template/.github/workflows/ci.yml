@@ -74,16 +74,16 @@ jobs:
         run: opam depext -yt {% endraw %}{{ project_slug }}{% raw %}
 
       - name: Install dependencies
-        run: opam install -t . --deps-only
+        run: make dev
 
       - name: Build
-        run: opam exec -- make
+        run: make build
 
       - name: Check formatting
-        run: opam exec -- make format
+        run: make format
 
       - name: Run tests
-        run: opam exec -- make test
+        run: make test
 {%- endraw -%}
 {%- endif -%}
 {%- raw %}
