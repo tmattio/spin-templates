@@ -21,10 +21,10 @@
   ; (rely :with-test)
   {%- else %}
   (alcotest :with-test)
-  {% endif -%}
+  {%- endif %}
   (odoc :with-doc)
   {%- if syntax == 'Reason' %}
   (reason :build)
-  {% endif -%}
+  {%- endif %}
   base
   stdio))
