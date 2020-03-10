@@ -13,7 +13,7 @@ on:
       - ppx/template/**
 
 jobs:
-  build:
+  build-ppx:
     name: Build and test
     runs-on: ${{ matrix.os }}
     strategy:
