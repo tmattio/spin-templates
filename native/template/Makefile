@@ -6,34 +6,34 @@ ifeq (start,$(firstword $(MAKECMDGOALS)))
 endif
 
 all:
-	dune build @install
+	opam exec -- dune build @install
 
 build:
-	dune build
+	opam exec -- dune build
 
 install:
-	dune install
+	opam exec -- dune install
 
 start: all
-	dune exec bin/{{ project_slug | snake_case }}_app.exe $(START_ARGS)
+	opam exec -- dune exec bin/{{ project_slug | snake_case }}_app.exe $(START_ARGS)
 
 test:
-	{% if test_framework == 'Rely' %}dune exec test/test_runner.exe{% else %}dune build @test/runtest -f{% endif %}
+	opam exec -- {% if test_framework == 'Rely' %}dune exec test/test_runner.exe{% else %}dune build @test/runtest -f{% endif %}
 
 clean:
-	dune clean
+	opam exec -- dune clean
 
 doc:
-	dune build @doc
+	opam exec -- dune build @doc
 
 doc-path:
 	@echo "_build/default/_doc/_html/index.html"
 
 format:
-	dune build @fmt --auto-promote
+	opam exec -- dune build @fmt --auto-promote
 
 watch:
-	dune build --watch
+	opam exec -- dune build --watch
 
 utop:
-	dune utop lib -- -implicit-bindings
+	opam exec -- dune utop lib -- -implicit-bindings
