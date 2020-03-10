@@ -96,20 +96,6 @@
 ))
 
 (post_install (
-  (command opam)
-  (args (switch create . 4.10.0 -y --deps-only))
-  (description "🐫  Creating local opam switch. This might take a couple minutes.")
-  (condition "{{ package_manager == 'Opam' and test_framework != 'Rely' }}")
-))
-
-(post_install (
-  (command opam)
-  (args (switch create . 4.09.0 -y --deps-only))
-  (description "🐫  Creating local opam switch. This might take a couple minutes.")
-  (condition "{{ package_manager == 'Opam' and test_framework == 'Rely' }}")
-))
-
-(post_install (
   (command make)
   (args (dev))
   (description "🎁  Installing packages. This might take a couple minutes.")
