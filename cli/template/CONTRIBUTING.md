@@ -79,7 +79,7 @@ This assumes you have a command like [open-cli](https://github.com/sindresorhus/
 {%- else %}
 ```bash
 make doc
-open-cli $(esy doc-path)
+open-cli $(make doc-path)
 ```
 
 This assumes you have a command like [open-cli](https://github.com/sindresorhus/open-cli) installed on your system.
