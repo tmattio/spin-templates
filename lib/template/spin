@@ -68,7 +68,7 @@
 ))
 
 (ignore (
-  (files (package\.json))
+  (files (esy\.json))
   (condition "{{ package_manager != 'Esy' }}")
 ))
 
