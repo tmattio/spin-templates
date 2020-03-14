@@ -14,6 +14,9 @@ esy.lock/* linguist-generated=true
 *.mli linguist-language=OCaml
 {%- endif %}
 
+# Disable syntax detection for .spin
+.spin linguist-language=Text
+
 # Declare shell files to have LF endings on checkout
 # On Windows, the default git setting for `core.autocrlf`
 # means that when checking out code, LF endings get converted
