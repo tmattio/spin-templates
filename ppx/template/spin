@@ -113,12 +113,6 @@
   (condition "{{ package_manager == 'Opam' }}")
 ))
 
-(post_install (
-  (command esy)
-  (working_dir test_bs)
-  (args ())
-))
-
 (example_command (
   (name "esy install")
   (description "Download and lock the dependencies.")

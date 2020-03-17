@@ -50,7 +50,7 @@ And add the PPX in your `bsconfig.json` file:
 ```json
 {
   "ppx-flags": [
-    "ppx-flags": ["esy x {{ project_slug }}.exe"]
+    "ppx-flags": ["esy x {{ project_slug }}"]
   ]
 }
 ```

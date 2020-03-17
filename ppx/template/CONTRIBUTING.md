@@ -49,15 +49,6 @@ make test
 ```
 {%- endif %}
 
-This will run the native unit test. If you want to run Bucklescript's integration test instead, you can do:
-
-```bash
-cd test_bs
-esy
-yarn install
-yarn build
-```
-
 ### Building documentation
 
 Documentation for the libraries in the project can be generated with:
@@ -116,9 +107,6 @@ The following snippet describes {{ project_name }}'s repository structure.
 │
 ├── test/
 |   Unit tests and integration tests for {{ project_name }}.
-│
-├── test_bs/
-|   Bucklescript integration tests for {{ project_name }}.
 │
 ├── dune-project
 |   Dune file used to mark the root of the project and define project-wide parameters.

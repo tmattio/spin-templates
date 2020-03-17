@@ -66,11 +66,3 @@ jobs:
         if: matrix.package-manager == '2'
         run: make test
         working-directory: ./_generated
-
-      - name: Run Bucklescript tests
-        run: |
-          esy install
-          esy build
-          yarn install
-          yarn build
-        working-directory: ./_generated/test_bs
