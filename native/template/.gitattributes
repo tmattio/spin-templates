@@ -1,14 +1,21 @@
+{% if package_manager == 'Esy' -%}
 # Supresses the lock folder from the diffs
 esy.lock/* linguist-generated=true
 
-# Tell github that .re and .rei files are Reason
+{% endif -%}
+
 {% if syntax == 'Reason' -%}
+# Tell github that .re and .rei files are Reason
 *.re linguist-language=Reason
 *.rei linguist-language=Reason
 {%- else -%}
+# Tell github that .ml and .mli files are OCaml
 *.ml linguist-language=OCaml
 *.mli linguist-language=OCaml
 {%- endif %}
+
+# Disable syntax detection for .spin
+.spin linguist-language=Text
 
 # Declare shell files to have LF endings on checkout
 # On Windows, the default git setting for `core.autocrlf`

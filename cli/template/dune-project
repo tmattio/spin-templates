@@ -1,28 +1,33 @@
-(lang dune 1.11)
+(lang dune 2.0)
 (name {{ project_slug }})
-(version 0.1.0)
 (source (github {{ github_username }}/{{ project_slug }}))
+(documentation "https://github.com/{{ github_username }}/{{ project_slug }}")
 (license MIT)
 (authors "{{ author_name }}{% if author_email %} <{{ author_email }}>{% endif %}")
 (maintainers "{{ author_name }}{% if author_email %} <{{ author_email }}>{% endif %}")
 
-{% if syntax == 'Reason' -%}
-(using fmt 1.2 (enabled_for reason))
-{%- else -%}
-(using fmt 1.2 (enabled_for ocaml))
-{%- endif %}
+(generate_opam_files true)
 
 (package
  (name {{ project_slug }})
  (synopsis "{{ project_description }}")
+ (description "\
+{{ project_description }}
+")
  (depends
-  {% if syntax == 'Reason' -%}
-  reason
-  {% endif -%}
-  dune
-  rely
+  (ocaml (>= 4.06.0))
+  (dune (>= 2.0))
+  {%- if test_framework == 'Rely' %}
+  ; Add Rely when released on Opam
+  ; (rely :with-test)
+  {%- else %}
+  (alcotest :with-test)
+  {%- endif %}
+  (odoc :with-doc)
+  {%- if syntax == 'Reason' %}
+  (reason :build)
+  {%- endif %}
   base
   cmdliner
   lwt
-  console
-  pastel))
+  stdio))

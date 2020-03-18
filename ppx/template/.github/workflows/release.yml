@@ -1,30 +1,34 @@
-{% raw -%}
 name: Release
 
-on:
-  push:
-    tags:
-      - v*
+on: 
+  release:
+    types: published
 
+{% if package_manager == 'Esy' -%}
+{% raw -%}
 jobs:
   build:
     name: Build and test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        # os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
-      - name: Log Github reference
-        run: echo "Checking out ${{ github.ref }}"
+      - uses: actions/checkout@v2
 
-      - uses: actions/checkout@v1
+      - name: Fetch git tags
+        run: git fetch --tags --force
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
           registry-url: "https://registry.npmjs.org"
+
+      - name: Set macOS deployment target
+        if: matrix.os == 'macos-latest'
+        run: |
+          echo "::set-env name=MACOSX_DEPLOYMENT_TARGET=10.9"
 
       - name: Cache esy dependencies
         uses: actions/cache@v1
@@ -48,7 +52,13 @@ jobs:
         run: esy install
 
       - name: Build
-        run: esy build
+        run: esy build --release
+
+      - name: Substitute watermarks
+        run: esy dune subst
+
+      - name: Build subst changes
+        run: esy dune build
 
       - name: Run tests
         run: esy test
@@ -56,38 +66,129 @@ jobs:
       - name: Export dependencies
         run: esy export-dependencies
 
-      - name: Get Esy binary path
-        id: esy_binary_path
+      - name: Get binary path
+        id: get_binary_path
         shell: bash
         run: |
           # from https://stackoverflow.com/a/24848739/617787
-          s=$(pwd); d=$(dirname $(esy x which {% endraw %}{{ project_slug }}{% raw %}.exe));
+          s=$(pwd); d=$(dirname $(esy x which {% endraw %}{{ project_slug }}{% raw %}));
           while [ "${d#$s/}" == "${d}" ]
           do s=$(dirname $s);b="../${b}"; done; 
-          ESY__BINARY_PATH=${b}${d#$s/}/{% endraw %}{{ project_slug }}{% raw %}.exe
-          echo "ESY__BINARY_PATH: $ESY__BINARY_PATH"
-          echo "##[set-output name=path;]$ESY__BINARY_PATH"
+          BINARY_PATH=${b}${d#$s/}/{% endraw %}{{ project_slug }}{% raw %}
+          echo "BINARY_PATH: $BINARY_PATH"
+          echo "##[set-output name=path;]$BINARY_PATH"
 
       - name: Upload artifacts for ${{ matrix.os }}
         uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.os }}
-          path: ${{ steps.esy_binary_path.outputs.path }}
+          path: ${{ steps.get_binary_path.outputs.path }}
+{%- endraw %}
+{% else -%}
+{% raw -%}
+jobs:
+  build:
+    name: Build and test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        ocaml-version: ['4.09.0']
+    steps:
+      - uses: avsm/setup-ocaml@master
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - uses: actions/checkout@v2
+
+      - name: Set macOS deployment target
+        if: matrix.os == 'macos-latest'
+        run: |
+          echo "::set-env name=MACOSX_DEPLOYMENT_TARGET=10.9"
+
+      - name: Pin package
+        run: opam pin add {% endraw %}{{ project_slug }}{% raw %}.dev -n .
+
+      - name: Query and install external dependencies
+        run: opam depext -yt {% endraw %}{{ project_slug }}{% raw %}
+
+      - name: Install dependencies
+        run: make dev
+
+      - name: Substitute watermarks
+        run: opam exec -- dune subst
+
+      - name: Build
+        run: make build
+
+      - name: Run tests
+        run: make test
+
+      - name: Get binary path
+        id: get_binary_path
+        shell: bash
+        run: |
+          # from https://stackoverflow.com/a/24848739/617787
+          s=$(pwd); d=$(dirname $(opam exec -- dune exec which {% endraw %}{{ project_slug }}{% raw %}));
+          while [ "${d#$s/}" == "${d}" ]
+          do s=$(dirname $s);b="../${b}"; done; 
+          BINARY_PATH=${b}${d#$s/}/{% endraw %}{{ project_slug }}{% raw %}
+          echo "BINARY_PATH: $BINARY_PATH"
+          echo "##[set-output name=path;]$BINARY_PATH"
+
+      - name: Upload artifacts for ${{ matrix.os }}
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ matrix.os }}
+          path: ${{ steps.get_binary_path.outputs.path }}
+{%- endraw -%}
+{%- endif -%}
+{%- raw %}
 
   publish:
     needs: build
     name: Publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+
+      - name: Fetch git tags
+        run: git fetch --tags --force
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
 
+      - name: Cache esy dependencies
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: _export
+          key: ${{ runner.OS }}-build-${{ hashFiles('esy.lock/index.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      - name: Install esy
+        run: npm install -g esy@latest
+
+      - name: Import dependencies
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: esy import-build _export/*
+
+      - name: Install dependencies
+        run: esy install
+
+      - name: Build
+        run: esy build --release
+
+      - name: Substitute watermarks
+        run: esy dune subst
+
       - name: Make NPM release skeleton
-        run: node scripts/release-make-skeleton.js
+        run: node script/release-make-skeleton.js
 
       - name: Download linux artifacts
         uses: actions/download-artifact@master
@@ -101,11 +202,11 @@ jobs:
           name: macos-latest
           path: _release/platform-darwin-x64
 
-      # - name: Download windows artifacts
-      #   uses: actions/download-artifact@master
-      #   with:
-      #     name: windows-latest
-      #     path: _release/platform-windows-x64
+      - name: Download windows artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: windows-latest
+          path: _release/platform-windows-x64
 
       - name: Create archives for Github release
         run: |
@@ -120,17 +221,6 @@ jobs:
           # cd _release/platform-windows-x64
           # zip -r ../../{% endraw %}{{ project_slug }}{% raw %}-windows-x64.zip .
           # cd ../..
-
-      - name: Create Github release
-        id: create_release
-        uses: actions/create-release@v1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
 
       - name: Upload {% endraw %}{{ project_slug }}{% raw %}-darwin-x64.zip to Github release 
         uses: actions/upload-release-asset@v1.0.1
@@ -152,15 +242,15 @@ jobs:
           asset_name: {% endraw %}{{ project_slug }}{% raw %}-linux-x64.zip
           asset_content_type: application/gzip
 
-      # - name: Upload {% endraw %}{{ project_slug }}{% raw %}-windows-x64.zip to Github release 
-      #   uses: actions/upload-release-asset@v1.0.1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: {% endraw %}{{ project_slug }}{% raw %}-windows-x64.zip
-      #     asset_name: {% endraw %}{{ project_slug }}{% raw %}-windows-x64.zip
-      #     asset_content_type: application/gzip
+      - name: Upload {% endraw %}{{ project_slug }}{% raw %}-windows-x64.zip to Github release 
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: {% endraw %}{{ project_slug }}{% raw %}-windows-x64.zip
+          asset_name: {% endraw %}{{ project_slug }}{% raw %}-windows-x64.zip
+          asset_content_type: application/gzip
 
       - name: Publish NPM package
         run: |

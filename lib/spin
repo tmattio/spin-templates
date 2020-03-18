@@ -1,0 +1,2 @@
+(name lib)
+(description "A simple library releasable on Opam")

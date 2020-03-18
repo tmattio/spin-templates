@@ -12,9 +12,23 @@ let get_tempdir = name => {
   |> Caml.Filename.concat(Caml.Filename.get_temp_dir_name());
 };
 
+{% if test_framework == 'Rely' -%}
+let exe_path = 
+  {%- if package_manager == 'Opam' %}
+  Lwt_process.pread_chars(("", [|"opam", "exec", "--", "dune", "exec", "which", "{{ project_slug }}"|]))
+  {%- elif package_manager == 'Esy' %}
+  Lwt_process.pread_chars(("", [|"esy", "x", "which", "{{ project_slug }}"|]))
+  {%- endif %}
+  |> Lwt_stream.to_string
+  |> Lwt.map(String.strip)
+  |> Lwt_main.run;
+{% elif test_framework == 'Alcotest' -%}
+let exe_path = "../bin/{{ project_slug | snake_case }}_app.exe";
+{%- endif %}
+
 /** Run {{ project_name }} binary with the given arguments and return the standard output. */
 let run = args => {
-  let arguments = args |> Array.append([|"esy", "start"|]);
+  let arguments = Array.append([|exe_path|], args);
 
   let env =
     Unix.environment()

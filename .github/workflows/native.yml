@@ -13,15 +13,25 @@ on:
       - native/template/**
 
 jobs:
-  build:
+  build-native:
     name: Build and test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
+        # 1=Reason, 2=OCaml
         syntax: [1, 2]
+        # 1=Esy, 2=Opam
+        package-manager: [1, 2]
+        # 1=Rely, 2=Alcotest
+        test-framework: [1, 2]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+
+      - uses: avsm/setup-ocaml@master
+        if: matrix.package-manager == '2'
+        with:
+          ocaml-version: '4.09.0'
 
       - uses: actions/setup-node@v1
         with:
@@ -34,19 +44,35 @@ jobs:
           path: ~/.esy
           key: ${{ runner.os }}-esy
 
-      - name: Install npm dependencies
-        run: npm install -g esy@latest @tmattio/spin
+      - name: Install Spin
+        run: npm install -g @tmattio/spin
+
+      - name: Install Esy
+        if: matrix.package-manager == '1'
+        run: npm install -g esy@latest
 
       - name: Generate template
         run: |
           mkdir _generated
           cd _generated
-          printf 'Test Template\n\n\nName\nusername\n${{ matrix.syntax }}\n' | spin new ../native .
+          printf 'Test Template\n\n\nName\nusername\n${{ matrix.syntax }}\n${{ matrix.package-manager }}\n${{ matrix.test-framework }}\n2\n' | spin new ../native .
 
-      - name: Run tests
+      - name: Run tests (Esy)
+        if: matrix.package-manager == '1'
         run: esy test
         working-directory: ./_generated
 
-      - name: Run binary
+      - name: Run tests (Opam)
+        if: matrix.package-manager == '2'
+        run: make test
+        working-directory: ./_generated
+
+      - name: Run binary (Esy)
+        if: matrix.package-manager == '1'
         run: esy start
+        working-directory: ./_generated
+
+      - name: Run binary (Opam)
+        if: matrix.package-manager == '2'
+        run: make start
         working-directory: ./_generated

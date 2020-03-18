@@ -1,0 +1,78 @@
+name: lib
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/lib.yml
+      - lib/template/**
+  pull_request:
+    paths:
+      - .github/workflows/lib.yml
+      - lib/template/**
+
+jobs:
+  build-lib:
+    name: Build and test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        # 1=Reason, 2=OCaml
+        syntax: [1, 2]
+        # 1=Esy, 2=Opam
+        package-manager: [1, 2]
+        # 1=Rely, 2=Alcotest
+        test-framework: [1, 2]
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: avsm/setup-ocaml@master
+        if: matrix.package-manager == '2'
+        with:
+          ocaml-version: '4.09.0'
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Cache esy dependencies
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: ~/.esy
+          key: ${{ runner.os }}-esy
+
+      - name: Install Spin
+        run: npm install -g @tmattio/spin
+
+      - name: Install Esy
+        if: matrix.package-manager == '1'
+        run: npm install -g esy@latest
+
+      - name: Generate template
+        run: |
+          mkdir _generated
+          cd _generated
+          printf 'Test Template\n\n\nName\nusername\n${{ matrix.syntax }}\n${{ matrix.package-manager }}\n${{ matrix.test-framework }}\n2\n' | spin new ../lib .
+
+      - name: Run tests (Esy)
+        if: matrix.package-manager == '1'
+        run: esy test
+        working-directory: ./_generated
+
+      - name: Run tests (Opam)
+        if: matrix.package-manager == '2'
+        run: make test
+        working-directory: ./_generated
+
+      - name: Run example (Esy)
+        if: matrix.package-manager == '1'
+        run: esy dune exec example/simple.exe
+        working-directory: ./_generated
+
+      - name: Run example (Opam)
+        if: matrix.package-manager == '2'
+        run: opam exec -- dune exec example/simple.exe
+        working-directory: ./_generated
