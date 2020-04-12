@@ -6,7 +6,7 @@ open {{ project_slug | modulify }}
 
 let test_version { expect } =
   let version = Test_utils.run [|"--version"|] in
-  let generated = String.strip version in
+  let generated = String.trim version in
   (expect.string generated).toEqual "%%VERSION%%"
 
 let () =
@@ -20,7 +20,7 @@ open {{ project_slug | modulify }}
 
 let test_version () =
   let version = Test_utils.run [|"--version"|] in
-  let generated = String.strip version in
+  let generated = String.trim version in
   check string "same string" generated "%%VERSION%%"
 
 let suite =

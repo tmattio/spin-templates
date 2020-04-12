@@ -18,12 +18,11 @@ let defaultCmd = {
 };
 
 let argv =
-  Sys.get_argv()
-  |> Array.map(~f=arg =>
-       switch (arg) {
-       | "-v" => "--version"
-       | x => x
-       }
-     );
+  Array.map(Sys.argv, ~f=arg =>
+    switch (arg) {
+    | "-v" => "--version"
+    | x => x
+    }
+  );
 
 let _ = Term.exit @@ Term.eval_choice(defaultCmd, Commands.all, ~argv);

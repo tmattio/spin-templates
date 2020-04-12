@@ -20,7 +20,7 @@ end) =
 struct
   include M
 
-  let opt_value = Sys.getenv name |> Option.map ~f:parse
+  let opt_value = Sys.getenv_opt name |> Option.map parse
 
   let get_opt () = opt_value
 
@@ -31,7 +31,7 @@ end
 
 let getenv_exn name =
   let fn () =
-    match Sys.getenv name with
+    match Sys.getenv_opt name with
     | Some env ->
       env
     | _ ->
@@ -52,14 +52,14 @@ module {{ project_slug | snake_case | upper }}_CACHE_DIR = EnvVar (struct
 
   let default =
     let home =
-      match Caml.Sys.os_type with
+      match Sys.os_type with
       | "Unix" ->
         getenv_exn "HOME"
       | _ ->
         getenv_exn "APPDATA"
     in
-    let cache_dir = Caml.Filename.concat home ".cache" in
-    Caml.Filename.concat cache_dir "{{ project_slug }}"
+    let cache_dir = Filename.concat home ".cache" in
+    Filename.concat cache_dir "{{ project_slug }}"
 end)
 
 let all () = [ {{ project_slug | snake_case | upper }}_CACHE_DIR.doc_info ]

@@ -14,7 +14,6 @@ let defaultCmd =
       ~sdocs:Man.sdocs )
 
 let argv =
-  Sys.get_argv ()
-  |> Array.map ~f:(fun arg -> match arg with "-v" -> "--version" | x -> x)
+  Array.map Sys.argv ~f:(fun arg -> match arg with "-v" -> "--version" | x -> x)
 
 let _ = Term.exit @@ Term.eval_choice defaultCmd Commands.all ~argv
