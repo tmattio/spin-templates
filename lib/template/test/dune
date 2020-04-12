@@ -7,7 +7,7 @@
 
 (executable
  (name test_runner)
- (libraries base {% if test_framework == 'Rely' %}rely.lib{% else %}alcotest{% endif %} {{ project_slug | snake_case }}_test)
+ (libraries {% if test_framework == 'Rely' %}rely.lib{% else %}alcotest{% endif %} {{ project_slug | snake_case }}_test)
  (modules test_runner))
 
 (rule
