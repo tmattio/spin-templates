@@ -1,8 +1,5 @@
 (library
  (name {{ project_slug | modulify }})
- (public_name {{ project_slug }}.lib)
- (modules (:standard))
- (libraries base)
- (flags -open Base))
+ (public_name {{ project_slug }}.lib))
 
 (include_subdirs unqualified)

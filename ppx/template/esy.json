@@ -13,7 +13,6 @@
     }
   },
   "dependencies": {
-    "@opam/base": "*",
     "@opam/dune": ">= 2.0",
     "@opam/ppxlib": "*",
     {%- if syntax == 'Reason' %}

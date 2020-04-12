@@ -2,7 +2,7 @@ open Cmdliner
 open {{ project_slug | modulify }}
 
 let run () =
-  Stdio.print_endline "Hello World!";
+  print_endline "Hello World!";
   Lwt.return ()
 
 let cmd =

@@ -1,11 +1,9 @@
 (library
  (name {{ project_slug | modulify }})
  (public_name {{ project_slug }}.lib)
- (modules (:standard))
- (libraries base ppxlib)
+ (libraries ppxlib)
  (kind ppx_rewriter)
  (preprocess
-  (pps ppxlib.metaquot ppxlib.runner))
- (flags -open Base))
+  (pps ppxlib.metaquot ppxlib.runner)))
 
 (include_subdirs unqualified)

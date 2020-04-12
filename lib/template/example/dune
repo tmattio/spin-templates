@@ -1,5 +1,3 @@
 (executables
  (names simple)
- (modules (:standard))
- (libraries base {{ project_slug }}.lib)
- (flags -open Base))
+ (libraries {{ project_slug }}.lib))

@@ -1,13 +1,7 @@
 (executable
  (name {{ project_slug | snake_case }}_app)
- (libraries base stdio cmdliner lwt.unix {{ project_slug }}.lib)
- (flags -open Base)
+ (public_name {{ project_slug }})
+ (libraries cmdliner lwt.unix {{ project_slug }}.lib)
  (modules (:standard)))
-
-(install
- (section bin)
- (package {{ project_slug }})
- (files
-  ({{ project_slug | snake_case }}_app.exe as {{ project_slug }})))
 
 (include_subdirs unqualified)
