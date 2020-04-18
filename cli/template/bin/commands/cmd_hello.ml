@@ -3,7 +3,7 @@ open {{ project_slug | modulify }}
 
 let run ~nameToGreet =
   let greeting = Utils.greet nameToGreet in
-  Stdio.print_endline greeting;
+  print_endline greeting;
   Lwt.return ()
 
 let cmd =

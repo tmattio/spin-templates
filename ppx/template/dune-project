@@ -26,5 +26,4 @@
   {%- if syntax == 'Reason' %}
   (reason :build)
   {%- endif %}
-  (base :build)
   (ppxlib :build)))

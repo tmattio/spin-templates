@@ -20,8 +20,6 @@ depends: [
   {% if syntax == 'Reason' -%}
   "reason" {build}
   {% endif -%}
-  "base"
-  "stdio"
 ]
 build: [
   ["dune" "subst"] {pinned}

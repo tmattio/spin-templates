@@ -16,7 +16,7 @@ module EnvVar =
          },
        ) => {
   include M;
-  let opt_value = Sys.getenv(name) |> Option.map(~f=parse);
+  let opt_value = Sys.getenv_opt(name) |> Option.map(parse);
   let get_opt = () => opt_value;
   let get = () => get_opt() |> Option.value(~default);
   let doc_info = {name, doc, default: unparse(default)};
@@ -24,7 +24,7 @@ module EnvVar =
 
 let getenv_exn = name => {
   let fn = () => {
-    switch (Sys.getenv(name)) {
+    switch (Sys.getenv_opt(name)) {
     | Some(env) => env
     | _ => raise(Errors.Missing_env_var(name))
     };
@@ -41,12 +41,12 @@ module {{ project_slug | snake_case | upper }}_CACHE_DIR =
     let doc = "The directory where the cached data is stored.";
     let default = {
       let home =
-        switch (Caml.Sys.os_type) {
+        switch (Sys.os_type) {
         | "Unix" => getenv_exn("HOME")
         | _ => getenv_exn("APPDATA")
         };
-      let cache_dir = Caml.Filename.concat(home, ".cache");
-      Caml.Filename.concat(cache_dir, "{{ project_slug }}");
+      let cache_dir = Filename.concat(home, ".cache");
+      Filename.concat(cache_dir, "{{ project_slug }}");
     };
   });
 

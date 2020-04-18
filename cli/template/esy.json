@@ -13,14 +13,12 @@
     }
   },
   "dependencies": {
-    "@opam/base": "*",
     "@opam/cmdliner": "*",
     "@opam/dune": ">= 2.0",
     "@opam/lwt": "*",
     {%- if syntax == 'Reason' %}
     "@opam/reason": "*",
     {%- endif %}
-    "@opam/stdio": "*",
     "ocaml": ">= 4.6.0"
   },
   "devDependencies": {

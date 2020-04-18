@@ -1,6 +1,6 @@
 module Filename = {
   let ensure_trailing = s =>
-    switch (Caml.String.get(s, Caml.String.length(s) - 1)) {
+    switch (String.get(s, String.length(s) - 1)) {
     | '/' => s
     | _ => s ++ "/"
     };

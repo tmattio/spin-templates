@@ -9,7 +9,7 @@ let get_tempdir name =
     "{{ project_slug }}-test-%s-%s"
     name
     (Unix.time () |> Float.to_int |> Int.to_string)
-  |> Caml.Filename.concat (Caml.Filename.get_temp_dir_name ())
+  |> Filename.concat (Filename.get_temp_dir_name ())
 
 {% if test_framework == 'Rely' -%}
 let exe_path = 
@@ -19,7 +19,7 @@ let exe_path =
   Lwt_process.pread_chars ("", [| "esy"; "x"; "which"; "{{ project_slug }}" |])
   {%- endif %}
   |> Lwt_stream.to_string
-  |> (Lwt.map String.strip)
+  |> (Lwt.map String.trim)
   |> Lwt_main.run
 {% elif test_framework == 'Alcotest' -%}
 let exe_path = "../bin/{{ project_slug | snake_case }}_app.exe"

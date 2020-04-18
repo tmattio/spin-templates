@@ -49,12 +49,13 @@ generate() {
     else
         make test
     fi
-    gh repo create "spin-playground/${full_name}" --public | true
-    git init
-    git add -A
-    git commit -m "Initial commit"
-    git remote add origin "git@github.com:spin-playground/${full_name}.git"
-    git push -f origin master
+    # Uncomment to publish to Github
+    # gh repo create "spin-playground/${full_name}" --public | true
+    # git init
+    # git add -A
+    # git commit -m "Initial commit"
+    # git remote add origin "git@github.com:spin-playground/${full_name}.git"
+    # git push -f origin master
     cd ..
     echo "Created repository https://github.com/spin-playground/${full_name}"
 }

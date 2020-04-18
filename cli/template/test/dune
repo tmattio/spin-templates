@@ -1,14 +1,13 @@
 (library
  (name {{ project_slug | snake_case }}_test)
- (flags -open Base -linkall -g -w -9)
- (libraries base lwt.unix {% if test_framework == 'Rely' %}rely.lib{% else %}alcotest{% endif %} {{ project_slug }}.lib)
+ (flags -linkall -g -w -9)
+ (libraries lwt.unix {% if test_framework == 'Rely' %}rely.lib{% else %}alcotest{% endif %} {{ project_slug }}.lib)
  (modules
   (:standard \ test_runner)))
 
 (executable
  (name test_runner)
- (libraries base {% if test_framework == 'Rely' %}rely.lib{% else %}alcotest{% endif %} {{ project_slug | snake_case }}_test)
- (flags -open Base)
+ (libraries {% if test_framework == 'Rely' %}rely.lib{% else %}alcotest{% endif %} {{ project_slug | snake_case }}_test)
  (modules test_runner))
 
 (rule
