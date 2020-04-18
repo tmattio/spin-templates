@@ -10,6 +10,8 @@
 (executable
  (name test_runner)
  (libraries {% if test_framework == 'Rely' %}rely.lib{% else %}alcotest{% endif %} {{ project_slug | snake_case }}_test)
+ (preprocess
+  (pps {{ project_slug }}.lib))
  (modules test_runner))
 
 (rule
