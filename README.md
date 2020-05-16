@@ -1,3 +1,7 @@
+> This repository was used for Spin's official templates until version 0.6.0.
+>
+> The official templates are now embedded in Spin.
+
 # Spin Templates
 
 Official templates for Spin.
